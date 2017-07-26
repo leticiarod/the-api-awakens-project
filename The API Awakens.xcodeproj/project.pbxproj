@@ -7,14 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		972F4DC81F226E5600AD990C /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DC71F226E5600AD990C /* Starship.swift */; };
+		972F4DCC1F26348900AD990C /* JSONDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCB1F26348900AD990C /* JSONDownloader.swift */; };
+		972F4DCE1F2637A100AD990C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCD1F2637A100AD990C /* APIError.swift */; };
+		972F4DD01F26396400AD990C /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCF1F26396400AD990C /* APIClient.swift */; };
+		972F4DD31F26898900AD990C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DD21F26898900AD990C /* Endpoint.swift */; };
 		97D63B2D1F1D24AD00B5DFFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D63B2C1F1D24AD00B5DFFC /* AppDelegate.swift */; };
 		97D63B2F1F1D24AD00B5DFFC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */; };
 		97D63B321F1D24AD00B5DFFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97D63B301F1D24AD00B5DFFC /* Main.storyboard */; };
 		97D63B341F1D24AD00B5DFFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97D63B331F1D24AD00B5DFFC /* Assets.xcassets */; };
 		97D63B371F1D24AD00B5DFFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97D63B351F1D24AD00B5DFFC /* LaunchScreen.storyboard */; };
+		97D63B431F22499700B5DFFC /* People.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D63B421F22499700B5DFFC /* People.swift */; };
+		97D63B451F224DAC00B5DFFC /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D63B441F224DAC00B5DFFC /* Vehicle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		972F4DC71F226E5600AD990C /* Starship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
+		972F4DCB1F26348900AD990C /* JSONDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDownloader.swift; sourceTree = "<group>"; };
+		972F4DCD1F2637A100AD990C /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		972F4DCF1F26396400AD990C /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		972F4DD21F26898900AD990C /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		97D63B291F1D24AD00B5DFFC /* The API Awakens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The API Awakens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D63B2C1F1D24AD00B5DFFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +34,8 @@
 		97D63B331F1D24AD00B5DFFC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97D63B361F1D24AD00B5DFFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97D63B381F1D24AD00B5DFFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		97D63B421F22499700B5DFFC /* People.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = People.swift; sourceTree = "<group>"; };
+		97D63B441F224DAC00B5DFFC /* Vehicle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vehicle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +49,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		972F4DC91F2271D800AD990C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				972F4DCB1F26348900AD990C /* JSONDownloader.swift */,
+				972F4DCF1F26396400AD990C /* APIClient.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		972F4DCA1F22720B00AD990C /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				972F4DCD1F2637A100AD990C /* APIError.swift */,
+			);
+			name = Errors;
+			sourceTree = "<group>";
+		};
+		972F4DD11F26897800AD990C /* Endpoint */ = {
+			isa = PBXGroup;
+			children = (
+				972F4DD21F26898900AD990C /* Endpoint.swift */,
+			);
+			name = Endpoint;
+			sourceTree = "<group>";
+		};
 		97D63B201F1D24AD00B5DFFC = {
 			isa = PBXGroup;
 			children = (
@@ -54,14 +93,44 @@
 		97D63B2B1F1D24AD00B5DFFC /* The API Awakens */ = {
 			isa = PBXGroup;
 			children = (
+				972F4DCA1F22720B00AD990C /* Errors */,
+				972F4DC91F2271D800AD990C /* Networking */,
+				97D63B411F22495E00B5DFFC /* Controllers */,
+				97D63B401F22495700B5DFFC /* Views */,
+				97D63B3F1F22494F00B5DFFC /* Models */,
 				97D63B2C1F1D24AD00B5DFFC /* AppDelegate.swift */,
-				97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */,
 				97D63B301F1D24AD00B5DFFC /* Main.storyboard */,
 				97D63B331F1D24AD00B5DFFC /* Assets.xcassets */,
 				97D63B351F1D24AD00B5DFFC /* LaunchScreen.storyboard */,
 				97D63B381F1D24AD00B5DFFC /* Info.plist */,
 			);
 			path = "The API Awakens";
+			sourceTree = "<group>";
+		};
+		97D63B3F1F22494F00B5DFFC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				972F4DD11F26897800AD990C /* Endpoint */,
+				97D63B421F22499700B5DFFC /* People.swift */,
+				97D63B441F224DAC00B5DFFC /* Vehicle.swift */,
+				972F4DC71F226E5600AD990C /* Starship.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		97D63B401F22495700B5DFFC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		97D63B411F22495E00B5DFFC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				972F4DCC1F26348900AD990C /* JSONDownloader.swift in Sources */,
+				972F4DD31F26898900AD990C /* Endpoint.swift in Sources */,
+				97D63B451F224DAC00B5DFFC /* Vehicle.swift in Sources */,
+				972F4DC81F226E5600AD990C /* Starship.swift in Sources */,
+				972F4DD01F26396400AD990C /* APIClient.swift in Sources */,
 				97D63B2F1F1D24AD00B5DFFC /* ViewController.swift in Sources */,
+				97D63B431F22499700B5DFFC /* People.swift in Sources */,
 				97D63B2D1F1D24AD00B5DFFC /* AppDelegate.swift in Sources */,
+				972F4DCE1F2637A100AD990C /* APIError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +378,7 @@
 				97D63B3D1F1D24AD00B5DFFC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
