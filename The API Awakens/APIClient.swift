@@ -11,8 +11,8 @@ import Foundation
 class APIClient {
     let downloader = JSONDownloader()
     
-    func searchForPeople(completion: @escaping ([People], APIError?) -> Void){
-        let endpoint = Itunes.people(url: nil)
+    func searchForPeople(page: Int, completion: @escaping ([People], APIError?) -> Void){
+        let endpoint = Itunes.people(url: nil, page: page)
         
         performRequest(with: endpoint) { results, error in
             guard let results = results else {
@@ -27,7 +27,7 @@ class APIClient {
     }
     
     func lookupCharacter(withUrl url: String, completion: @escaping (People?, APIError?) -> Void) {
-        let endpoint = Itunes.people(url: url)
+        let endpoint = Itunes.people(url: url, page: nil)
         
         performLookupRequest(with: endpoint) { results, error in
             guard let results = results else {

@@ -11,7 +11,7 @@ import Foundation
 protocol Endpoint {
     var base: String { get }
     var path: String { get }
-  //  var queryItems: [URLQueryItem] { get }
+    var queryItems: [URLQueryItem] { get }
     
 }
 
@@ -19,7 +19,7 @@ extension Endpoint {
     var urlComponents: URLComponents {
         var components = URLComponents(string: base)!
         components.path = path
-        //components.queryItems = queryItems
+        components.queryItems = queryItems
         print(components)
         return components
     }
@@ -31,7 +31,7 @@ extension Endpoint {
 }
 
 enum Itunes {
-    case people(url: String?)
+    case people(url: String?, page: Int?)
     case starships(url: String?)
     case vehicles(url: String?)
     
@@ -45,16 +45,18 @@ extension Itunes: Endpoint {
     
     var path: String {
             switch self {
-            case .people(let url):
+            case .people(let url, let page):
                 if let url = url {
                     print("URL \(url)")
                     var urlArray = url.components(separatedBy: "/")
                     print(" cuanto tiene el arr urlArray[5] \(urlArray[5])")
                     return "/api/people/\(urlArray[5])"
                 }
-                else {
-                    return "/api/people/"
+                else{
+                    
+                    return "/api/people"
                 }
+                
                 
             case .starships(let url):
                 if let url = url {
@@ -79,6 +81,33 @@ extension Itunes: Endpoint {
                 }
         }
 
+    }
+    
+    var queryItems: [URLQueryItem]{
+        switch self {
+        case .people(let url, let page): var result = [URLQueryItem]()
+                                            if let page = page {
+                                                let pageItem = URLQueryItem(name: "page", value: String(page))
+                                                result.append(pageItem)
+
+                                            }
+                                         return result
+        case .starships(let url): var result = [URLQueryItem]()
+                                        /*    if let page = page {
+                                                let pageItem = URLQueryItem(name: "page", value: String(page))
+                                                result.append(pageItem)
+            
+                                            } */
+                                            return result
+        case .vehicles(let url): var result = [URLQueryItem]()
+                               /*  if let page = page {
+                                    let pageItem = URLQueryItem(name: "page", value: String(page))
+                                    result.append(pageItem)
+            
+                                    } */
+                                    return result
+        
+        }
     }
 }
 
