@@ -32,8 +32,8 @@ extension Endpoint {
 
 enum Itunes {
     case people(url: String?, page: Int?)
-    case starships(url: String?)
-    case vehicles(url: String?)
+    case starships(url: String?, page: Int?)
+    case vehicles(url: String?, page: Int?)
     
 }
 
@@ -58,7 +58,7 @@ extension Itunes: Endpoint {
                 }
                 
                 
-            case .starships(let url):
+            case .starships(let url, let page):
                 if let url = url {
                     print("URL \(url)")
                     var urlArray = url.components(separatedBy: "/")
@@ -69,7 +69,7 @@ extension Itunes: Endpoint {
                     return "/api/starships/"
                 }
                 
-            case .vehicles(let url):
+            case .vehicles(let url, let page):
                 if let url = url {
                     print("URL \(url)")
                     var urlArray = url.components(separatedBy: "/")
@@ -92,19 +92,19 @@ extension Itunes: Endpoint {
 
                                             }
                                          return result
-        case .starships(let url): var result = [URLQueryItem]()
-                                        /*    if let page = page {
+        case .starships(let url, let page): var result = [URLQueryItem]()
+                                            if let page = page {
                                                 let pageItem = URLQueryItem(name: "page", value: String(page))
                                                 result.append(pageItem)
             
-                                            } */
+                                            }
                                             return result
-        case .vehicles(let url): var result = [URLQueryItem]()
-                               /*  if let page = page {
+        case .vehicles(let url, let page): var result = [URLQueryItem]()
+                                 if let page = page {
                                     let pageItem = URLQueryItem(name: "page", value: String(page))
                                     result.append(pageItem)
             
-                                    } */
+                                    } 
                                     return result
         
         }

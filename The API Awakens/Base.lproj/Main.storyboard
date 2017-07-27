@@ -1,14 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ncg-Q9-vfq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="ZnV-qS-FSF">
+            <objects>
+                <viewController id="D0q-k6-gYD" customClass="HomeViewController" customModule="The_API_Awakens" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Fo-Ca-fuP"/>
+                        <viewControllerLayoutGuide type="bottom" id="hRO-Ck-SfN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Dzm-y9-xC0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Fcc-Fd-58D">
+                                <rect key="frame" x="8" y="56" width="359" height="619"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LAB-cJ-ML5">
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="206.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Character" translatesAutoresizingMaskIntoConstraints="NO" id="XZ6-zJ-W6n">
+                                                <rect key="frame" x="129" y="53" width="100" height="100"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="san-gk-kyW">
+                                                <rect key="frame" x="139" y="146.5" width="80" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="Characters">
+                                                    <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="charactersButtonPressed:" destination="D0q-k6-gYD" eventType="touchUpInside" id="Abz-yW-MKp"/>
+                                                    <segue destination="BYZ-38-t0r" kind="show" identifier="characters" id="WhS-zn-ZSb"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.10588235294117647" green="0.12549019607843137" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="san-gk-kyW" secondAttribute="bottom" constant="30" id="crr-Cc-eaC"/>
+                                            <constraint firstItem="XZ6-zJ-W6n" firstAttribute="centerX" secondItem="LAB-cJ-ML5" secondAttribute="centerX" id="gKo-5Z-6G7"/>
+                                            <constraint firstItem="san-gk-kyW" firstAttribute="centerX" secondItem="LAB-cJ-ML5" secondAttribute="centerX" id="hHH-Aq-gmw"/>
+                                            <constraint firstItem="XZ6-zJ-W6n" firstAttribute="centerY" secondItem="LAB-cJ-ML5" secondAttribute="centerY" id="sga-aS-b6E"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                <integer key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6D-1X-zj8">
+                                        <rect key="frame" x="0.0" y="206.5" width="359" height="206"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vehicle" translatesAutoresizingMaskIntoConstraints="NO" id="6dc-sg-zrO">
+                                                <rect key="frame" x="129" y="53" width="100" height="100"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C4R-If-FXh">
+                                                <rect key="frame" x="149" y="146" width="61" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="Vehicles">
+                                                    <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="vehiclesButtonPressed:" destination="D0q-k6-gYD" eventType="touchUpInside" id="wXV-Qy-kg3"/>
+                                                    <segue destination="BYZ-38-t0r" kind="show" identifier="vehicles" id="18n-tm-UnA"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.10588235294117647" green="0.12549019607843137" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="C4R-If-FXh" secondAttribute="bottom" constant="30" id="46g-dt-Cc7"/>
+                                            <constraint firstItem="6dc-sg-zrO" firstAttribute="centerY" secondItem="Z6D-1X-zj8" secondAttribute="centerY" id="7KB-wg-Y1Y"/>
+                                            <constraint firstItem="6dc-sg-zrO" firstAttribute="centerX" secondItem="Z6D-1X-zj8" secondAttribute="centerX" id="Zbm-2g-m48"/>
+                                            <constraint firstItem="C4R-If-FXh" firstAttribute="centerX" secondItem="Z6D-1X-zj8" secondAttribute="centerX" id="d5r-DY-SYj"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QfW-xD-nWg">
+                                        <rect key="frame" x="0.0" y="412.5" width="359" height="206.5"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Starship" translatesAutoresizingMaskIntoConstraints="NO" id="4uQ-gb-TYA">
+                                                <rect key="frame" x="129.5" y="53.5" width="100" height="100"/>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lom-x9-OpP">
+                                                <rect key="frame" x="145.5" y="146.5" width="68" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                <state key="normal" title="Starships">
+                                                    <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="starshipsButtonPressed:" destination="D0q-k6-gYD" eventType="touchUpInside" id="oI1-3Y-Vis"/>
+                                                    <segue destination="BYZ-38-t0r" kind="show" identifier="starships" id="DYn-Lg-AwG"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.10588235294117647" green="0.12549019607843137" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="4uQ-gb-TYA" firstAttribute="centerX" secondItem="QfW-xD-nWg" secondAttribute="centerX" id="3rv-Y2-pMd"/>
+                                            <constraint firstItem="Lom-x9-OpP" firstAttribute="centerX" secondItem="QfW-xD-nWg" secondAttribute="centerX" id="Kru-sR-Mn5"/>
+                                            <constraint firstAttribute="bottom" secondItem="Lom-x9-OpP" secondAttribute="bottom" constant="30" id="tSI-6U-vnB"/>
+                                            <constraint firstItem="4uQ-gb-TYA" firstAttribute="centerY" secondItem="QfW-xD-nWg" secondAttribute="centerY" id="uWW-KE-cvo"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fcc-Fd-58D" secondAttribute="trailing" constant="-8" id="43n-rT-o1O"/>
+                            <constraint firstItem="Fcc-Fd-58D" firstAttribute="leading" secondItem="Dzm-y9-xC0" secondAttribute="leadingMargin" constant="-8" id="N1s-dg-24j"/>
+                            <constraint firstItem="hRO-Ck-SfN" firstAttribute="top" secondItem="Fcc-Fd-58D" secondAttribute="bottom" constant="-8" id="Yhi-h0-ncf"/>
+                            <constraint firstItem="Fcc-Fd-58D" firstAttribute="top" secondItem="4Fo-Ca-fuP" secondAttribute="bottom" constant="-8" id="mzd-9X-W2q"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="NkJ-AY-CPL"/>
+                    <connections>
+                        <outletCollection property="viewCollection" destination="LAB-cJ-ML5" collectionClass="NSMutableArray" id="2vb-xt-cL8"/>
+                        <outletCollection property="viewCollection" destination="Z6D-1X-zj8" collectionClass="NSMutableArray" id="MzF-P9-xPO"/>
+                        <outletCollection property="viewCollection" destination="QfW-xD-nWg" collectionClass="NSMutableArray" id="1jw-TI-47h"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jc5-61-BQz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-135.19999999999999" y="20.239880059970016"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -21,12 +145,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ukx-YD-iNi">
-                                <rect key="frame" x="0.0" y="141" width="375" height="216"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ukx-YD-iNi">
+                                <rect key="frame" x="27.5" y="371" width="320" height="216"/>
                             </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ukx-YD-iNi" secondAttribute="bottom" constant="80" id="JPN-An-aQH"/>
+                            <constraint firstItem="Ukx-YD-iNi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Q2A-1B-1qc"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="picker" destination="Ukx-YD-iNi" id="jkP-1u-mnR"/>
@@ -34,6 +161,33 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="632.79999999999995" y="21.139430284857571"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="I6W-Us-oa2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ncg-Q9-vfq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Gn-EM-XN3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="D0q-k6-gYD" kind="relationship" relationship="rootViewController" id="Fi2-GT-X0R"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdW-NV-hFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1074.4000000000001" y="20.239880059970016"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Character" width="100" height="100"/>
+        <image name="Starship" width="100" height="100"/>
+        <image name="Vehicle" width="100" height="100"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="DYn-Lg-AwG"/>
+    </inferredMetricsTieBreakers>
 </document>

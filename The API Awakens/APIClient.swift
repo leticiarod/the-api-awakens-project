@@ -54,8 +54,8 @@ class APIClient {
         
     }
 
-    func searchForStarships(completion: @escaping ([Starship], APIError?) -> Void){
-        let endpoint = Itunes.starships(url: nil)
+    func searchForStarships(page: Int, completion: @escaping ([Starship], APIError?) -> Void){
+        let endpoint = Itunes.starships(url: nil, page: page)
         
         performRequest(with: endpoint) { results, error in
             guard let results = results else {
@@ -70,7 +70,7 @@ class APIClient {
     }
     
     func lookupStarship(withUrl url: String, completion: @escaping (Starship?, APIError?) -> Void) {
-        let endpoint = Itunes.starships(url: url)
+        let endpoint = Itunes.starships(url: url, page: nil)
         
         print("ENDPOINT \(endpoint.request)")
         performLookupRequest(with: endpoint) { results, error in
@@ -89,8 +89,8 @@ class APIClient {
         
     }
 
-    func searchForVehicles(completion: @escaping ([Vehicle], APIError?) -> Void){
-        let endpoint = Itunes.vehicles(url: nil)
+    func searchForVehicles(page: Int, completion: @escaping ([Vehicle], APIError?) -> Void){
+        let endpoint = Itunes.vehicles(url: nil, page: page)
         
         performRequest(with: endpoint) { results, error in
             guard let results = results else {
@@ -105,7 +105,7 @@ class APIClient {
     }
     
     func lookupVehicle(withUrl url: String, completion: @escaping (Vehicle?, APIError?) -> Void) {
-        let endpoint = Itunes.vehicles(url: url)
+        let endpoint = Itunes.vehicles(url: url, page: nil)
         
         print("ENDPOINT \(endpoint.request)")
         performLookupRequest(with: endpoint) { results, error in
