@@ -13,6 +13,7 @@
 		972F4DD01F26396400AD990C /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCF1F26396400AD990C /* APIClient.swift */; };
 		972F4DD31F26898900AD990C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DD21F26898900AD990C /* Endpoint.swift */; };
 		972F4DD51F29AF8000AD990C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DD41F29AF8000AD990C /* HomeViewController.swift */; };
+		972F4DD71F2A71F800AD990C /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DD61F2A71F800AD990C /* Planet.swift */; };
 		97D63B2D1F1D24AD00B5DFFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D63B2C1F1D24AD00B5DFFC /* AppDelegate.swift */; };
 		97D63B2F1F1D24AD00B5DFFC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */; };
 		97D63B321F1D24AD00B5DFFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97D63B301F1D24AD00B5DFFC /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 		972F4DCF1F26396400AD990C /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		972F4DD21F26898900AD990C /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		972F4DD41F29AF8000AD990C /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		972F4DD61F2A71F800AD990C /* Planet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
 		97D63B291F1D24AD00B5DFFC /* The API Awakens.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The API Awakens.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		97D63B2C1F1D24AD00B5DFFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				97D63B421F22499700B5DFFC /* People.swift */,
 				97D63B441F224DAC00B5DFFC /* Vehicle.swift */,
 				972F4DC71F226E5600AD990C /* Starship.swift */,
+				972F4DD61F2A71F800AD990C /* Planet.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				97D63B451F224DAC00B5DFFC /* Vehicle.swift in Sources */,
 				972F4DC81F226E5600AD990C /* Starship.swift in Sources */,
 				972F4DD01F26396400AD990C /* APIClient.swift in Sources */,
+				972F4DD71F2A71F800AD990C /* Planet.swift in Sources */,
 				972F4DD51F29AF8000AD990C /* HomeViewController.swift in Sources */,
 				97D63B2F1F1D24AD00B5DFFC /* ViewController.swift in Sources */,
 				97D63B431F22499700B5DFFC /* People.swift in Sources */,

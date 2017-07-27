@@ -34,7 +34,7 @@ enum Itunes {
     case people(url: String?, page: Int?)
     case starships(url: String?, page: Int?)
     case vehicles(url: String?, page: Int?)
-    
+    case planet(url: String)
 }
 
 extension Itunes: Endpoint {
@@ -79,6 +79,12 @@ extension Itunes: Endpoint {
                 else {
                     return "/api/vehicles/"
                 }
+            case .planet(let url):
+                print("URL \(url)")
+                var urlArray = url.components(separatedBy: "/")
+                print(" cuanto tiene el arr urlArray[5] \(urlArray[5])")
+                return "/api/planets/\(urlArray[5])"
+           
         }
 
     }
@@ -106,7 +112,7 @@ extension Itunes: Endpoint {
             
                                     } 
                                     return result
-        
+        default: fatalError()
         }
     }
 }

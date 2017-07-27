@@ -124,7 +124,25 @@ class APIClient {
         
     }
     
-
+    func lookupPlanet(withUrl url: String, completion: @escaping (Planet?, APIError?) -> Void) {
+        let endpoint = Itunes.vehicles(url: url, page: nil)
+        
+        print("ENDPOINT \(endpoint.request)")
+        performLookupRequest(with: endpoint) { results, error in
+            guard let results = results else {
+                completion(nil, error)
+                return
+            }
+            
+            
+            print("result unico \(results)")
+            
+            let planet = Planet(json: results)
+            
+            completion(planet, nil)
+        }
+        
+    }
     
     typealias Results = [[String: Any]]
     

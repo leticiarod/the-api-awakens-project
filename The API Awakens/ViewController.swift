@@ -13,6 +13,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBOutlet weak var picker: UIPickerView!
     
+    @IBOutlet var labelCollection: [UILabel]!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet var contentLabel: [UILabel]!
+    
     let client = APIClient()
     var url = ""
     var peopleArray: [People] = [People]()
@@ -74,6 +80,22 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         
     }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        
+        switch entityTypeTapped {
+        case "characters": let url = self.peopleArray[row].url
+            print("selected !! \(url)")
+                        lookupCharacter(by: url)
+            
+        case "vehicles": let url = self.vehiclesArray[row].url
+            lookupVehicle(by: url)
+        case "starships": let url = self.starshipsArray[row].url
+            lookupStarship(by: url)
+        default: fatalError()
+        }
+    }
 
     func searchForPeople(){
         for index in 1...9 {
@@ -91,9 +113,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     }
     
-    func lookupCharacter(){
-        client.lookupCharacter(withUrl: "https://swapi.co/api/people/1/") { people, error in
-            print("imprimo person \(people?.name)")
+    func lookupCharacter(by url: String){
+        //"https://swapi.co/api/people/1/"
+        client.lookupCharacter(withUrl: url) { people, error in
+            if let people = people {
+            
+            self.setComponentsUI(for: people)
+            }
         }
     }
     
@@ -109,9 +135,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    func lookupStarship(){
-        client.lookupStarship(withUrl: "https://swapi.co/api/starships/12") { starship, error in
-            print("starship unica \(starship?.name)")
+    func lookupStarship(by url: String){
+        //"https://swapi.co/api/starships/12"
+        client.lookupStarship(withUrl: url) { starship, error in
+            //print("starship unica \(starship?.name)")
+            if let starship = starship {
+                self.setComponentsUI(for: starship)
+            }
             }
 
     }
@@ -130,11 +160,65 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     }
     
-    func lookupVehicle(){
-        client.lookupVehicle(withUrl: "http://swapi.co/api/vehicles/4/") { vehicle, error in
-            print("vehiculo url \(vehicle?.name)")
+    func lookupVehicle(by url: String){
+        //"http://swapi.co/api/vehicles/4/"
+        client.lookupVehicle(withUrl: url) { vehicle, error in
+           // print("vehiculo url \(vehicle?.name)")
+            if let vehicle = vehicle {
+            self.setComponentsUI(for: vehicle)
+            }
+        }
     }
+    
+    func setComponentsUI(for character: People){
+        titleLabel.text = character.name
+        
+        contentLabel[0].text = character.birthYear
+        
+        client.lookupPlanet(withUrl: character.homeworldUrl) { planet, error in
+            if let planet = planet {
+            self.contentLabel[1].text = planet.name
+            }
+        }
+        contentLabel[2].text = character.height
+        contentLabel[3].text = character.eyeColor
+        contentLabel[4].text = character.hairColor
     }
-
+    
+    func setComponentsUI(for vehicle: Vehicle){
+        
+        labelCollection[0].text = "Make"
+        labelCollection[1].text = "Cost"
+        labelCollection[2].text = "Length"
+        labelCollection[3].text = "Class"
+        labelCollection[4].text = "Crew"
+        
+        titleLabel.text = vehicle.name
+        
+        contentLabel[0].text = vehicle.manufacturer
+        contentLabel[1].text = vehicle.costInCredits
+        contentLabel[2].text = vehicle.length
+        contentLabel[3].text = vehicle.vehicleClass
+        contentLabel[4].text = vehicle.crew
+        
+    }
+    
+    func setComponentsUI(for starship: Starship){
+        
+        labelCollection[0].text = "Make"
+        labelCollection[1].text = "Cost"
+        labelCollection[2].text = "Length"
+        labelCollection[3].text = "Class"
+        labelCollection[4].text = "Crew"
+        
+        titleLabel.text = starship.name
+        
+        contentLabel[0].text = starship.manufacturer
+        contentLabel[1].text = starship.costInCredits
+        contentLabel[2].text = starship.length
+        contentLabel[3].text = starship.starshipClass
+        contentLabel[4].text = starship.crew
+        
+    }
+    
 }
-
