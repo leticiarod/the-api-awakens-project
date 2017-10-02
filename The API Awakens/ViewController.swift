@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum UnitType {
+    case englishMetric
+    case BritishUnits
+}
+
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
@@ -29,12 +34,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var hairLabel: UILabel!
     @IBOutlet weak var hairValueLabel: UILabel!
     @IBOutlet weak var englishLabel: UILabel!
-    @IBOutlet weak var englishValueLabel: UILabel!
+    @IBOutlet weak var englishValueLabel: UIButton!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
     
     
-    @IBOutlet weak var metricType: UIStackView!
+    
     
     let client = APIClient()
     var url = ""
@@ -56,6 +61,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     var valueArray: [Double] = [Double]()
+    
+    //
+    var heightValueAux = ""
     
     
     override func viewDidLoad() {
@@ -124,7 +132,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
         switch entityTypeTapped {
         case "characters":
         return self.peopleArray[row].name
@@ -241,6 +248,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func setComponentsUI(for character: People){
+        englishLabel.text = "English"
+        englishValueLabel.setTitle("Metric", for: .normal)
         titleLabel.text = character.name
         
         contentLabel[0].text = character.birthYear
@@ -250,7 +259,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             self.contentLabel[1].text = planet.name
             }
         }
-        contentLabel[2].text = character.height
+        
+        heightValueAux = character.height
+        
+        contentLabel[2].text = customize(height: heightValueAux, for: UnitType.englishMetric)
         contentLabel[3].text = character.eyeColor
         contentLabel[4].text = character.hairColor
     }
@@ -335,6 +347,94 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     
+    @IBAction func unitsButtonPressed(_ sender: Any){
+        
+        // 1 m = 100cm = 39,4 in
+        
+        //100 - 39.4
+        //164 - X
+        //x = (164 * 39,4)100 = 64,6
+        //x=164*0.394 = 64.6
+     //   100 - 39.4
+      //  x   - 64.6
+        
+      //  163,9 = 164
+        
+       // 2.54 * 64.6
+        
+        let labelValue = englishLabel.text
+        
+        // To Inch
+        if labelValue == "English" {
+            englishLabel.text = "British"
+            englishValueLabel.setTitle("Units", for: .normal)
+            if  heightValueAux != "unknown" {
+                if let doubleHeightValue = Double(heightValueAux) {
+                let value = doubleHeightValue * 0.394
+                let stringHeight = String(value.rounded())
+                heightValueAux = stringHeight
+                    heightValueLabel.text = customize(height: stringHeight, for: UnitType.BritishUnits)
+            }
+            }
+        }
+        // To meters
+        else {
+            englishLabel.text = "English"
+            englishValueLabel.setTitle("Metric", for: .normal)
+            if heightValueAux != "unknown" {
+               if let doubleHeightValue = Double(heightValueAux) {
+                let value = doubleHeightValue * 2.54
+                let stringHeight = String(value.rounded())
+                heightValueAux = stringHeight
+                heightValueLabel.text = customize(height: stringHeight, for: UnitType.englishMetric)
+            }
+            }
+        }
+    }
+    
+    func customize(height value: String, for type: UnitType) -> String{
+        print("size del string \(value.characters.count) \(value)")
+        switch value.characters.count {
+        case 2:
+            if type == .englishMetric {
+            return "0.\(value)m"
+                
+            }
+            else {
+            return "0.\(value)in"}
+        case 3: let toIndex = value.index(value.startIndex, offsetBy: 1)
+                let fromIndex = value.index(value.startIndex, offsetBy: 1)
+        if type == .englishMetric {
+            return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))m"
+        }
+        else {
+            return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            
+        case 4: let index = value.index(value.startIndex, offsetBy: 2)
+        if type == .englishMetric {
+                        return "0.\(value.substring(to: index))m"
+            }
+        else {
+            return "0.\(value.substring(to: index))in"
+            }
+        case 5: //166.0
+            let toIndex = value.index(value.startIndex, offsetBy: 1)
+            //let fromIndex = value.index(value.startIndex, offsetBy: 1)
+        let start = value.index(value.startIndex, offsetBy: 1)
+        let end = value.index(value.endIndex, offsetBy: -2)
+        let range = start..<end
+            if type == .englishMetric {
+            return "\(value.substring(to: toIndex)).\(value.substring(with: range))m"
+            }
+            else{
+            return "\(value.substring(to: toIndex)).\(value.substring(with: range))in"
+            }
+        default:
+            //
+            fatalError()
+        }
+    }
 }
 
 
