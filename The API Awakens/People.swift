@@ -9,7 +9,7 @@
 import Foundation
 
 
-class People {
+class People: Comparable {
     let name: String
     let birthYear: String
     let homeworldUrl: String
@@ -28,8 +28,23 @@ class People {
         self.url = url
     }
     
+    static func < (lhs: People, rhs: People) -> Bool {
+        return Int(lhs.height)! < Int(rhs.height)!
+    }
+    
+    static func > (lhs: People, rhs: People) -> Bool {
+            return Int(lhs.height)! > Int(rhs.height)!
+    }
+    
+    static func == (lhs: People, rhs: People) -> Bool {
+        var returnValue = false
+        if Int(lhs.height)! == Int(rhs.height)!
+        {
+            returnValue = true
+        }
+        return returnValue
+    } 
 }
-
 
 extension People {
     convenience init?(json: [String: Any]) {

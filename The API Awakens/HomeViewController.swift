@@ -23,7 +23,7 @@ class HomeViewController: UIViewController {
                 viewCollection.forEach {
                     y += Double($0.layer.frame.height)
                     //Double($0.layer.frame.width)
-                    bottomLine.frame = CGRect(x: 0.0, y: $0.layer.frame.height - 1, width: $0.layer.frame.width, height: 1.0)
+                    bottomLine.frame = CGRect(x: 0.0, y: Double(y), width: Double($0.layer.frame.width), height: 1.0)
                     bottomLine.backgroundColor = UIColor.lightGray.cgColor
                    // $0.layer.borderWidth = CGFloat(UITextBorderStyle.none.rawValue)
                     $0.layer.addSublayer(bottomLine)
@@ -38,8 +38,23 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        
+        // Status bar white font
+       // navigationBar.barStyle = UIBarStyle.Black
+      //  navigationBar.tintColor = UIColor.whiteColor()
+        
+       // let color = UIColor(red:0.11, green:0.13, blue:0.14, alpha:1.0)
+        
+       navigationController?.navigationBar.barTintColor = UIColor.white
+        
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+      //  self.navigationController?.navigationBar.tintColor = UIColor.white
+     //   navigationController?.status = UIBarStyle.
+     //   navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+      //  navigationController?.navigationBar.shadowImage = UIImage()
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,7 +75,6 @@ class HomeViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("pase por el prepare")
         let viewController = segue.destination as! ViewController
         if segue.identifier == "characters" {
             viewController.entityTypeTapped = "characters"
@@ -76,7 +90,9 @@ class HomeViewController: UIViewController {
             }
         }
         
-     //   self.navigationController?.navigationBar.tintColor = UIColor.white
+        //#CCCCCC
+        
+     //
     //
      //   let backItem = UIBarButtonItem()
       //  backItem.title = "Back"

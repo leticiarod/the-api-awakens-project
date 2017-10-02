@@ -97,9 +97,7 @@ class APIClient {
                 completion([], error)
                 return
             }
-            //print(results)
             let vehicle  = results.flatMap { Vehicle(json: $0) }
-            //print(vehicle)
             completion(vehicle,nil)
         }
     }
