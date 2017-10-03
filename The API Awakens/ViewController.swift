@@ -71,6 +71,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     let usdButton = UIButton()
     let creditsButton = UIButton()
+    
+    var buttonsArray: [UIButton] = [UIButton]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,21 +83,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Customize navigation bar of view controller
         customizeNavigationBar()
         
-        usdButton.setTitle("USD", for: .normal)
-        usdButton.setTitleColor(greyColor, for: .normal)
-        usdButton.addTarget(self, action: #selector(usdButtonClicked(sender:)), for:.touchUpInside)
+        //
+        hideInfoLabels()
         
-        creditsButton.setTitle("Credits", for: .normal)
-        creditsButton.titleLabel!.numberOfLines = 1
-        creditsButton.contentScaleFactor = 0.5
-        creditsButton.titleLabel!.adjustsFontSizeToFitWidth = true
-        creditsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        creditsButton.addTarget(self, action: #selector(creditsButtonClicked(sender:)), for:.touchUpInside)
-        
-        
-        var buttonsArray: [UIButton] = [UIButton]()
-        buttonsArray.append(usdButton)
-        buttonsArray.append(creditsButton)
+        //
+        createExchangeButtons()
         
         // Set title by option chosen by the user in the home menu
         switch entityTypeTapped {
@@ -102,12 +95,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
                             searchForPeople()
         case "vehicles": self.title = "Vehicles"
-        //
-        addSubViewToStackView(buttonsArray)
+        
             searchForVehicles()
         case "starships": self.title = "Starships"
-        //
-        addSubViewToStackView(buttonsArray)
+        
             searchForStarships()
         default: break
         }
@@ -120,13 +111,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidLayoutSubviews() {
-        print("viewDidLayoutSubviews \(peopleHeightArray.count)")
-        
-        for item in peopleHeightArray {
-            print(" imprimo height de people array \(item)")
-        }
-    }
     
     func back(sender: UIBarButtonItem) {
         // Perform your custom actions
@@ -218,7 +202,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let arrangedPeopleHeightArray: [People] = self.arrangeArray(arrangedPeopleHeightArrayAux)
             
             //
-            self.populateQuickFactsBar(arrangedPeopleHeightArray)
+            self.populateQuickFactsBar(arrangedPeopleHeightArray,nil,nil)
 
         }
         
@@ -234,13 +218,39 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func searchForStarships(){
+        let myGroup = DispatchGroup()
          for index in 1...4 {
+            myGroup.enter()
             client.searchForStarships(page: index) { starships, error in
             self.starshipsArray.append(contentsOf: starships)
             // Connect data:
             self.picker.delegate = self
             self.picker.dataSource = self
+            myGroup.leave()
             }
+        }
+        
+        myGroup.notify(queue: .main) {
+            
+            print("Finished all requests.")
+            
+            var arrangedStarshipLengthArrayAux: [Starship] = [Starship]()
+            
+            //
+            for starship in self.starshipsArray {
+                if let length = String(starship.length) {
+                    if length != "unknown" && length != "1,600" {
+                        arrangedStarshipLengthArrayAux.append(starship)
+                    }
+                }
+            }
+            
+            //
+           let arrangedStarshipLengthArray: [Starship] = self.arrangeArray(arrangedStarshipLengthArrayAux)
+            
+            //
+           self.populateQuickFactsBar(nil,nil,arrangedStarshipLengthArray)
+            
         }
     }
     
@@ -254,15 +264,42 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func searchForVehicles(){
-        
+         let myGroup = DispatchGroup()
          for index in 1...4 {
+            myGroup.enter()
             client.searchForVehicles(page: index) { vehicles, error in
             self.vehiclesArray.append(contentsOf: vehicles)
             // Connect data:
             self.picker.delegate = self
             self.picker.dataSource = self
+            myGroup.leave()
             }
-    }
+        }
+        
+        myGroup.notify(queue: .main) {
+            
+            print("Finished all requests.")
+            
+            var arrangedVehicleLengthArrayAux: [Vehicle] = [Vehicle]()
+            
+            //
+            for vehicle in self.vehiclesArray {
+                if let length = String(vehicle.length) {
+                    if length != "unknown"{
+                        arrangedVehicleLengthArrayAux.append(vehicle)
+                    }
+                }
+            }
+            
+            //
+            let arrangedVehicleLengthArray: [Vehicle] = self.arrangeArray(arrangedVehicleLengthArrayAux)
+            
+            //
+            self.populateQuickFactsBar(nil,arrangedVehicleLengthArray,nil)
+            
+        }
+        
+        
     }
     
     func lookupVehicle(by url: String){
@@ -288,9 +325,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         heightValueAux = character.height
         
-        contentLabel[2].text = customize(height: heightValueAux, for: UnitType.englishMetric)
+        contentLabel[2].text = heightValueAux
+            //customize(height: heightValueAux, for: UnitType.englishMetric)
         contentLabel[3].text = character.eyeColor
         contentLabel[4].text = character.hairColor
+        
+        showInfoLabels()
     }
     
     func setComponentsUI(for vehicle: Vehicle){
@@ -310,12 +350,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         costInCredits = vehicle.costInCredits
         
         contentLabel[1].text = costInCredits
-        //contentLabel[1].numberOfLines = 1;
+        contentLabel[1].numberOfLines = 1;
         contentLabel[1].adjustsFontSizeToFitWidth = true
         
         contentLabel[2].text = vehicle.length
         contentLabel[3].text = vehicle.vehicleClass
         contentLabel[4].text = vehicle.crew
+        
+        addSubViewToStackView(buttonsArray)
+        showInfoLabels()
     }
     
     func setComponentsUI(for starship: Starship){
@@ -341,6 +384,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         contentLabel[2].text = starship.length
         contentLabel[3].text = starship.starshipClass
         contentLabel[4].text = starship.crew
+        
+        addSubViewToStackView(buttonsArray)
+        
+        showInfoLabels()
         
     }
     
@@ -391,9 +438,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return ascendingSizes
     }
     
-    func populateQuickFactsBar(_ arrangedPeopleHeightArray: [People]){
-        self.smallest.text = String(describing: arrangedPeopleHeightArray[0].name)
-        self.largest.text = String(describing: arrangedPeopleHeightArray[arrangedPeopleHeightArray.count - 1].name)
+    func populateQuickFactsBar(_ arrangedPeopleHeightArray: [People]?, _ arrangedVehicleLengthArray: [Vehicle]?,_ arrangedStarshipLengthArray: [Starship]?){
+        
+        print("populateQuickFactsBar")
+        
+        if let arrangedPeopleHeightArray = arrangedPeopleHeightArray{
+            self.smallest.text = String(describing: arrangedPeopleHeightArray[0].name)
+            self.largest.text = String(describing: arrangedPeopleHeightArray[arrangedPeopleHeightArray.count - 1].name)
+        }
+        
+        if let arrangedVehicleLengthArray = arrangedVehicleLengthArray{
+            self.smallest.text = String(describing: arrangedVehicleLengthArray[0].name)
+            self.largest.text = String(describing: arrangedVehicleLengthArray[arrangedVehicleLengthArray.count - 1].name)
+        }
+        
+        if let arrangedStarshipLengthArray = arrangedStarshipLengthArray{
+            self.smallest.text = String(describing: arrangedStarshipLengthArray[0].name)
+            self.largest.text = String(describing: arrangedStarshipLengthArray[arrangedStarshipLengthArray.count - 1].name)
+        }
     }
     
     
@@ -442,6 +504,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    //
     func customize(height value: String, for type: UnitType) -> String{
         print("size del string \(value.characters.count) \(value)")
         switch value.characters.count {
@@ -526,6 +589,54 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
     
+    func createExchangeButtons(){
+        usdButton.setTitle("USD", for: .normal)
+        usdButton.setTitleColor(greyColor, for: .normal)
+        usdButton.addTarget(self, action: #selector(usdButtonClicked(sender:)), for:.touchUpInside)
+        
+        creditsButton.setTitle("Credits", for: .normal)
+        creditsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        creditsButton.addTarget(self, action: #selector(creditsButtonClicked(sender:)), for:.touchUpInside)
+        
+        
+        
+        buttonsArray.append(usdButton)
+        buttonsArray.append(creditsButton)
+    }
+    
+    // sets all labels to visible = false
+    func hideInfoLabels(){
+        titleLabel.isHidden = true
+        bornLabel.isHidden = true
+        bornValueLabel.isHidden = true
+        homeLabel.isHidden = true
+        homeValueLabel.isHidden = true
+        heightLabel.isHidden = true
+        heightValueLabel.isHidden = true
+        eyesLabel.isHidden = true
+        eyesValueLabel.isHidden = true
+        hairLabel.isHidden = true
+        hairValueLabel.isHidden = true
+        englishLabel.isHidden = true
+        englishValueLabel.isHidden = true
+    }
+    
+    func showInfoLabels(){
+        titleLabel.isHidden = false
+        bornLabel.isHidden = false
+        bornValueLabel.isHidden = false
+        homeLabel.isHidden = false
+        homeValueLabel.isHidden = false
+        heightLabel.isHidden = false
+        heightValueLabel.isHidden = false
+        eyesLabel.isHidden = false
+        eyesValueLabel.isHidden = false
+        hairLabel.isHidden = false
+        hairValueLabel.isHidden = false
+        englishLabel.isHidden = false
+        englishValueLabel.isHidden = false
+     
+    }
 }
 
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Vehicle {
+class Vehicle: Comparable {
     let name: String
     let manufacturer: String
     let costInCredits: String
@@ -25,6 +25,23 @@ class Vehicle {
         self.vehicleClass = vehicleClass
         self.crew = crew
         self.url = url
+    }
+    
+    static func < (lhs: Vehicle, rhs: Vehicle) -> Bool {
+        return Double(lhs.length)! < Double(rhs.length)!
+    }
+    
+    static func > (lhs: Vehicle, rhs: Vehicle) -> Bool {
+        return Double(lhs.length)! > Double(rhs.length)!
+    }
+    
+    static func == (lhs: Vehicle, rhs: Vehicle) -> Bool {
+        var returnValue = false
+        if Double(lhs.length)! == Double(rhs.length)!
+        {
+            returnValue = true
+        }
+        return returnValue
     }
 }
 

@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Starship {
+class Starship: Comparable {
     let name: String
     let manufacturer: String
     let costInCredits: String
@@ -27,6 +27,24 @@ class Starship {
         self.crew = crew
         self.url = url
     }
+    
+    static func < (lhs: Starship, rhs: Starship) -> Bool {
+        return Double(lhs.length)! < Double(rhs.length)!
+    }
+    
+    static func > (lhs: Starship, rhs: Starship) -> Bool {
+        return Double(lhs.length)! > Double(rhs.length)!
+    }
+    
+    static func == (lhs: Starship, rhs: Starship) -> Bool {
+        var returnValue = false
+        if Double(lhs.length)! == Double(rhs.length)!
+        {
+            returnValue = true
+        }
+        return returnValue
+    }
+
 }
 
 

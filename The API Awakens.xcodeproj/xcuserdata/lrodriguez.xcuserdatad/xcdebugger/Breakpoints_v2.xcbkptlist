@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "528751136.967278"
+            timestampString = "528758334.105071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "277"
-            endingLineNumber = "277"
+            startingLineNumber = "314"
+            endingLineNumber = "314"
             landmarkName = "setComponentsUI(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "528751136.967278"
+            timestampString = "528758334.105071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
             landmarkName = "arrangeArray(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "528751136.967278"
+            timestampString = "528758334.105071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "412"
-            endingLineNumber = "412"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
             landmarkName = "unitsButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "528751136.967278"
+            timestampString = "528758334.105071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
             landmarkName = "unitsButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "528751136.967278"
+            timestampString = "528757319.253251"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "lookupCharacter(by:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,13 +122,61 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "528751136.967278"
+            timestampString = "528758334.105071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "setComponentsUI(for:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "The API Awakens/ViewController.swift"
+            timestampString = "528758334.105071"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "searchForStarships()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "The_API_Awakens.ViewController.searchForStarships () -&gt; ()"
+                  moduleName = "The API Awakens"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lrodriguez/workspaces/The%20API%20Awakens/The%20API%20Awakens/ViewController.swift"
+                  timestampString = "528757745.416836"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "603">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "The_API_Awakens.ViewController.(searchForStarships () -&gt; ()).(closure #2)"
+                  moduleName = "The API Awakens"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lrodriguez/workspaces/The%20API%20Awakens/The%20API%20Awakens/ViewController.swift"
+                  timestampString = "528757745.419836"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "254"
+                  endingLineNumber = "254"
+                  offsetFromSymbolStart = "900">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
