@@ -38,7 +38,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
     
-    
+    @IBOutlet weak var stackViewContainer: UIStackView!
     
     
     let client = APIClient()
@@ -49,6 +49,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var entityTypeTapped = ""
     var lightGreyColor = UIColor(red:0.80, green:0.80, blue:0.80, alpha:1.0)
     var darkGreyColor = UIColor(red:0.11, green:0.13, blue:0.14, alpha:1.0)
+    var greyColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:1.0)
     
     //
     var peopleHeightArray: [Int] = [Int]()
@@ -65,7 +66,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //
     var heightValueAux = ""
     
+    //
+    var costInCredits = ""
     
+    let usdButton = UIButton()
+    let creditsButton = UIButton()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,13 +80,34 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Customize navigation bar of view controller
         customizeNavigationBar()
         
+        usdButton.setTitle("USD", for: .normal)
+        usdButton.setTitleColor(greyColor, for: .normal)
+        usdButton.addTarget(self, action: #selector(usdButtonClicked(sender:)), for:.touchUpInside)
+        
+        creditsButton.setTitle("Credits", for: .normal)
+        creditsButton.titleLabel!.numberOfLines = 1
+        creditsButton.contentScaleFactor = 0.5
+        creditsButton.titleLabel!.adjustsFontSizeToFitWidth = true
+        creditsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        creditsButton.addTarget(self, action: #selector(creditsButtonClicked(sender:)), for:.touchUpInside)
+        
+        
+        var buttonsArray: [UIButton] = [UIButton]()
+        buttonsArray.append(usdButton)
+        buttonsArray.append(creditsButton)
+        
         // Set title by option chosen by the user in the home menu
         switch entityTypeTapped {
         case "characters": self.title = "Characters"
+        
                             searchForPeople()
         case "vehicles": self.title = "Vehicles"
+        //
+        addSubViewToStackView(buttonsArray)
             searchForVehicles()
         case "starships": self.title = "Starships"
+        //
+        addSubViewToStackView(buttonsArray)
             searchForStarships()
         default: break
         }
@@ -271,10 +297,22 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         
         setLabelComponents()
+        
+        usdButton.setTitleColor(greyColor, for: .normal)
+        creditsButton.setTitleColor(.white, for: .normal)
+
         titleLabel.text = vehicle.name
         
+
         contentLabel[0].text = vehicle.manufacturer
-        contentLabel[1].text = vehicle.costInCredits
+        contentLabel[0].adjustsFontSizeToFitWidth = true
+        
+        costInCredits = vehicle.costInCredits
+        
+        contentLabel[1].text = costInCredits
+        //contentLabel[1].numberOfLines = 1;
+        contentLabel[1].adjustsFontSizeToFitWidth = true
+        
         contentLabel[2].text = vehicle.length
         contentLabel[3].text = vehicle.vehicleClass
         contentLabel[4].text = vehicle.crew
@@ -284,10 +322,22 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         setLabelComponents()
         
+        usdButton.setTitleColor(greyColor, for: .normal)
+        creditsButton.setTitleColor(.white, for: .normal)
+
+        
         titleLabel.text = starship.name
         
         contentLabel[0].text = starship.manufacturer
-        contentLabel[1].text = starship.costInCredits
+        contentLabel[0].numberOfLines = 1;
+        contentLabel[0].adjustsFontSizeToFitWidth = true
+
+        costInCredits = starship.costInCredits
+        
+        contentLabel[1].text = costInCredits
+        contentLabel[1].numberOfLines = 1;
+        contentLabel[1].adjustsFontSizeToFitWidth = true
+        
         contentLabel[2].text = starship.length
         contentLabel[3].text = starship.starshipClass
         contentLabel[4].text = starship.crew
@@ -435,7 +485,49 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             fatalError()
         }
     }
+    
+   
+    
+    //  Given an array of buttons, this buttons are added to the stack view menu.
+    func addSubViewToStackView(_ array: [UIButton]){
+        for button in array {
+            stackViewContainer.addArrangedSubview(button)
+        }
+    }
+    
+    
+     //1 Credit = 0,62 USD
+    
+    func usdButtonClicked(sender: UIButton){
+        print("usdButtonClicked")
+        
+        usdButton.setTitleColor(.white, for: .normal)
+        creditsButton.setTitleColor(greyColor, for: .normal)
+       /* 1 - 0.62
+        24 - X
+        
+        x = 24.0.62
+ 
+         */
+        if costInCredits != "unknown"{
+            if let cost = Double(costInCredits){
+                let costInCreditsValue = cost * 0.62
+                homeValueLabel.text = String(costInCreditsValue.rounded())
+            }
+        }
+    }
+    
+    func creditsButtonClicked(sender: UIButton){
+        print("creditsButtonClicked")
+        usdButton.setTitleColor(greyColor, for: .normal)
+        creditsButton.setTitleColor(.white, for: .normal)
+        
+        homeValueLabel.text = costInCredits
+        
+    }
+    
 }
+
 
 
 extension UIView {
