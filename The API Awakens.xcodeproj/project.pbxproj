@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		97060CCA1F852C8F0014711D /* ShowMoreCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97060CC91F852C8F0014711D /* ShowMoreCharacterController.swift */; };
 		972F4DC81F226E5600AD990C /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DC71F226E5600AD990C /* Starship.swift */; };
 		972F4DCC1F26348900AD990C /* JSONDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCB1F26348900AD990C /* JSONDownloader.swift */; };
 		972F4DCE1F2637A100AD990C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCD1F2637A100AD990C /* APIError.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		97060CC91F852C8F0014711D /* ShowMoreCharacterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreCharacterController.swift; sourceTree = "<group>"; };
 		972F4DC71F226E5600AD990C /* Starship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
 		972F4DCB1F26348900AD990C /* JSONDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDownloader.swift; sourceTree = "<group>"; };
 		972F4DCD1F2637A100AD990C /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			children = (
 				97D63B2E1F1D24AD00B5DFFC /* ViewController.swift */,
 				972F4DD41F29AF8000AD990C /* HomeViewController.swift */,
+				97060CC91F852C8F0014711D /* ShowMoreCharacterController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				97D63B431F22499700B5DFFC /* People.swift in Sources */,
 				97D63B2D1F1D24AD00B5DFFC /* AppDelegate.swift in Sources */,
 				972F4DCE1F2637A100AD990C /* APIError.swift in Sources */,
+				97060CCA1F852C8F0014711D /* ShowMoreCharacterController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

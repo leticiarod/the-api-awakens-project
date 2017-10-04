@@ -38,7 +38,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
     
+    
+    @IBOutlet weak var showMoreButton: UIButton!
+    
+    
     @IBOutlet weak var stackViewContainer: UIStackView!
+    
+    
     
     
     let client = APIClient()
@@ -73,6 +79,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     let creditsButton = UIButton()
     
     var buttonsArray: [UIButton] = [UIButton]()
+    
+    
+    
+    var characterAux: People? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +120,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "ShowMoreCharacter" {
+            guard let showMoreViewController = segue.destination as? ShowMoreCharacterController else {
+                return
+            }
+            showMoreViewController.people = self.characterAux
+            
+           
+        }
+        }
+
     
     
     func back(sender: UIBarButtonItem) {
@@ -259,7 +282,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if let starship = starship {
                 self.setComponentsUI(for: starship)
             }
-            }
+        }
 
     }
     
@@ -311,6 +334,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func setComponentsUI(for character: People){
+        
+      //  disableViewsInStackView(vehiclesCharacter)
+      //  disableViewsInStackView(starshipsCharacter)
+        
+        
+        
+        self.characterAux = character
+        
         englishLabel.text = "English"
         englishValueLabel.setTitle("Metric", for: .normal)
         titleLabel.text = character.name
@@ -330,6 +361,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         contentLabel[3].text = character.eyeColor
         contentLabel[4].text = character.hairColor
         
+              
         showInfoLabels()
     }
     
@@ -558,6 +590,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
+    // Hide the buttons added to the stack view menu.
+    func disableViewsInStackView(_ array: [UIButton]){
+        for button in array {
+            button.isHidden = true
+            button.isEnabled = false
+        }
+    }
+
+    
     
      //1 Credit = 0,62 USD
     
@@ -619,6 +660,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         hairValueLabel.isHidden = true
         englishLabel.isHidden = true
         englishValueLabel.isHidden = true
+        showMoreButton.isHidden = true
+        showMoreButton.isUserInteractionEnabled = false
     }
     
     func showInfoLabels(){
@@ -635,6 +678,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         hairValueLabel.isHidden = false
         englishLabel.isHidden = false
         englishValueLabel.isHidden = false
+        showMoreButton.isHidden = false
+        showMoreButton.isUserInteractionEnabled = true
      
     }
 }

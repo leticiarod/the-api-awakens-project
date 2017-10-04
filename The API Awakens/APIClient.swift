@@ -48,6 +48,8 @@ class APIClient {
            // let albumResults = results[1..<results.count]
             let people = People(json: results)
             print("1 persom \(people?.url)")
+            print("VEHICULOS \(people?.vehicles)")
+            print("STARSHIPS\(people?.starships)")
             
             completion(people, nil)
         }

@@ -17,8 +17,10 @@ class People: Comparable {
     let eyeColor: String
     let hairColor: String
     let url: String
+    let vehicles: [String]
+    let starships: [String]
     
-    init(name: String, birthYear: String, homeworldUrl: String, height: String, eyeColor: String, hairColor: String, url: String){
+    init(name: String, birthYear: String, homeworldUrl: String, height: String, eyeColor: String, hairColor: String, url: String, vehicles: [String], starships: [String]){
         self.name = name
         self.birthYear = birthYear
         self.homeworldUrl = homeworldUrl
@@ -26,6 +28,8 @@ class People: Comparable {
         self.eyeColor = eyeColor
         self.hairColor = hairColor
         self.url = url
+        self.vehicles = vehicles
+        self.starships = starships
     }
     
     static func < (lhs: People, rhs: People) -> Bool {
@@ -56,6 +60,8 @@ extension People {
             static let eyeColor = "eye_color"
             static let hairColor = "hair_color"
             static let url = "url"
+            static let vehicles = "vehicles"
+            static let starships = "starships"
         }
         
         guard let artistName = json[Key.caracterName] as? String,
@@ -64,13 +70,15 @@ extension People {
             let height = json[Key.height] as? String,
             let eyeColor = json[Key.eyeColor] as? String,
             let hairColor = json[Key.hairColor] as? String,
-            let url = json[Key.url] as? String
+            let url = json[Key.url] as? String,
+            let vehicles = json[Key.vehicles] as? [String],
+            let starships = json[Key.starships] as? [String]
         else {
                 print("entre al guard")
                 return nil
         }
         
-        self.init(name: artistName, birthYear: birthYear, homeworldUrl: homeworldUrl, height: height, eyeColor: eyeColor, hairColor: hairColor, url: url)
+        self.init(name: artistName, birthYear: birthYear, homeworldUrl: homeworldUrl, height: height, eyeColor: eyeColor, hairColor: hairColor, url: url, vehicles: vehicles, starships: starships)
         }
 }
 
