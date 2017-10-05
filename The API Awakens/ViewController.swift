@@ -84,6 +84,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var characterAux: People? = nil
     
+    let activityIndicator = ActivityIndicator()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -102,6 +105,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Set title by option chosen by the user in the home menu
         switch entityTypeTapped {
         case "characters": self.title = "Characters"
+        
+       activityIndicator.addActivityIndicatorToPickerView(view: self.view)
+                            activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
         
                             searchForPeople()
         case "vehicles": self.title = "Vehicles"
@@ -181,13 +187,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         switch entityTypeTapped {
         case "characters": let url = self.peopleArray[row].url
-            print("selected !! \(url)")
-                        lookupCharacter(by: url)
-            
-        case "vehicles": let url = self.vehiclesArray[row].url
-            lookupVehicle(by: url)
-        case "starships": let url = self.starshipsArray[row].url
-            lookupStarship(by: url)
+                           activityIndicator.addActivityIndicator(to: self.view)
+                           activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
+                           lookupCharacter(by: url)
+        case "vehicles":   let url = self.vehiclesArray[row].url
+                           lookupVehicle(by: url)
+        case "starships":  let url = self.starshipsArray[row].url
+                           lookupStarship(by: url)
         default: fatalError()
         }
     }
@@ -197,6 +203,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         for index in 1...9 {
             myGroup.enter()
             client.searchForPeople(page: index) { people, error in
+                
+            
                 self.peopleArray.append(contentsOf: people)
                 // Connect data:
                 self.picker.delegate = self
@@ -209,6 +217,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         myGroup.notify(queue: .main) {
             
             print("Finished all requests.")
+            
+            self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
             
             var arrangedPeopleHeightArrayAux: [People] = [People]()
             
@@ -338,7 +348,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
       //  disableViewsInStackView(vehiclesCharacter)
       //  disableViewsInStackView(starshipsCharacter)
         
+        //stopActivityIndicator()
         
+        activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
         
         self.characterAux = character
         
@@ -682,7 +694,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         showMoreButton.isUserInteractionEnabled = true
      
     }
-}
+    
+    
+    
+    }
 
 
 

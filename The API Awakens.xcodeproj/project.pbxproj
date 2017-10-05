@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		97060CCA1F852C8F0014711D /* ShowMoreCharacterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97060CC91F852C8F0014711D /* ShowMoreCharacterController.swift */; };
+		97060CCD1F864E660014711D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97060CCC1F864E660014711D /* ActivityIndicator.swift */; };
 		972F4DC81F226E5600AD990C /* Starship.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DC71F226E5600AD990C /* Starship.swift */; };
 		972F4DCC1F26348900AD990C /* JSONDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCB1F26348900AD990C /* JSONDownloader.swift */; };
 		972F4DCE1F2637A100AD990C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 972F4DCD1F2637A100AD990C /* APIError.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		97060CC91F852C8F0014711D /* ShowMoreCharacterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowMoreCharacterController.swift; sourceTree = "<group>"; };
+		97060CCC1F864E660014711D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		972F4DC71F226E5600AD990C /* Starship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Starship.swift; sourceTree = "<group>"; };
 		972F4DCB1F26348900AD990C /* JSONDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONDownloader.swift; sourceTree = "<group>"; };
 		972F4DCD1F2637A100AD990C /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -55,6 +57,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		97060CCB1F864E430014711D /* Activity Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				97060CCC1F864E660014711D /* ActivityIndicator.swift */,
+			);
+			name = "Activity Indicator";
+			sourceTree = "<group>";
+		};
 		972F4DC91F2271D800AD990C /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +109,7 @@
 		97D63B2B1F1D24AD00B5DFFC /* The API Awakens */ = {
 			isa = PBXGroup;
 			children = (
+				97060CCB1F864E430014711D /* Activity Indicator */,
 				972F4DCA1F22720B00AD990C /* Errors */,
 				972F4DC91F2271D800AD990C /* Networking */,
 				97D63B411F22495E00B5DFFC /* Controllers */,
@@ -118,8 +129,8 @@
 			children = (
 				972F4DD11F26897800AD990C /* Endpoint */,
 				97D63B421F22499700B5DFFC /* People.swift */,
-				97D63B441F224DAC00B5DFFC /* Vehicle.swift */,
 				972F4DC71F226E5600AD990C /* Starship.swift */,
+				97D63B441F224DAC00B5DFFC /* Vehicle.swift */,
 				972F4DD61F2A71F800AD990C /* Planet.swift */,
 			);
 			name = Models;
@@ -225,6 +236,7 @@
 				97D63B2F1F1D24AD00B5DFFC /* ViewController.swift in Sources */,
 				97D63B431F22499700B5DFFC /* People.swift in Sources */,
 				97D63B2D1F1D24AD00B5DFFC /* AppDelegate.swift in Sources */,
+				97060CCD1F864E660014711D /* ActivityIndicator.swift in Sources */,
 				972F4DCE1F2637A100AD990C /* APIError.swift in Sources */,
 				97060CCA1F852C8F0014711D /* ShowMoreCharacterController.swift in Sources */,
 			);

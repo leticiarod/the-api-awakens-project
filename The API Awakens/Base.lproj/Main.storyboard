@@ -279,7 +279,7 @@
                                             <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="2Pn-4o-LGy" kind="showDetail" identifier="ShowMoreCharacter" id="c7t-45-c6o"/>
+                                            <segue destination="bIB-7p-z3I" kind="showDetail" identifier="ShowMoreCharacter" id="c7t-45-c6o"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -415,7 +415,27 @@
             </objects>
             <point key="canvasLocation" x="965.60000000000002" y="26.53673163418291"/>
         </scene>
-        <!--Show More Character Controller-->
+        <!--Item-->
+        <scene sceneID="2j6-Ju-FZE">
+            <objects>
+                <viewController id="iOX-1S-4mR" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vev-ym-a3i"/>
+                        <viewControllerLayoutGuide type="bottom" id="FOD-rN-oLw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iyq-eS-yYQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" selectedImage="Starship" id="U08-xL-uxb"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JAO-JS-44a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2529" y="-419"/>
+        </scene>
+        <!--Item-->
         <scene sceneID="Chn-Bn-BFN">
             <objects>
                 <viewController id="2Pn-4o-LGy" customClass="ShowMoreCharacterController" customModule="The_API_Awakens" sceneMemberID="viewController">
@@ -460,7 +480,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wn-yX-tFX">
-                                <rect key="frame" x="46" y="607" width="283" height="30"/>
+                                <rect key="frame" x="46" y="558" width="283" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="VOg-J6-50d"/>
                                 </constraints>
@@ -483,6 +503,7 @@
                             <constraint firstItem="KAe-fe-Rjw" firstAttribute="top" secondItem="4wn-yX-tFX" secondAttribute="bottom" constant="30" id="oFi-b4-10G"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" selectedImage="Vehicle" id="Vst-uF-d2P"/>
                     <connections>
                         <outlet property="starshipContainer" destination="O4U-lW-fEw" id="HMj-F6-29b"/>
                         <outlet property="starshipLabel" destination="QlH-sl-gDI" id="Nhh-fJ-CRX"/>
@@ -492,7 +513,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tfg-LH-cXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1742" y="20"/>
+            <point key="canvasLocation" x="2703" y="395"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="I6W-Us-oa2">
@@ -511,6 +532,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pdW-NV-hFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1074.4000000000001" y="20.239880059970016"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ZyC-7c-QDK">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="bIB-7p-z3I" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Gcb-np-O9W">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="2Pn-4o-LGy" kind="relationship" relationship="viewControllers" id="6xJ-Ui-kjm"/>
+                        <segue destination="iOX-1S-4mR" kind="relationship" relationship="viewControllers" id="I3v-io-Huh"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vcc-vM-1jL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1741.5999999999999" y="19.340329835082461"/>
         </scene>
     </scenes>
     <resources>
