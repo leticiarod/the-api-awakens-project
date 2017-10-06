@@ -112,9 +112,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                             searchForPeople()
         case "vehicles": self.title = "Vehicles"
         
+        activityIndicator.addActivityIndicatorToPickerView(view: self.view)
+        activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
             searchForVehicles()
         case "starships": self.title = "Starships"
-        
+        showMoreButton.isHidden = true
+        activityIndicator.addActivityIndicatorToPickerView(view: self.view)
+        activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
             searchForStarships()
         default: break
         }
@@ -206,8 +210,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                            activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
                            lookupCharacter(by: url)
         case "vehicles":   let url = self.vehiclesArray[row].url
+        activityIndicator.addActivityIndicator(to: self.view)
+        activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
                            lookupVehicle(by: url)
         case "starships":  let url = self.starshipsArray[row].url
+        activityIndicator.addActivityIndicator(to: self.view)
+        activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
                            lookupStarship(by: url)
         default: fatalError()
         }
@@ -240,8 +248,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 if let height = String(character.height) {
                     if height != "unknown" {
                     arrangedPeopleHeightArrayAux.append(character)
+                    }
                 }
-            }
             }
             
             //
@@ -279,6 +287,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         myGroup.notify(queue: .main) {
             
             print("Finished all requests.")
+            
+             self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
             
             var arrangedStarshipLengthArrayAux: [Starship] = [Starship]()
             
@@ -326,6 +336,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             print("Finished all requests.")
             
+             self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
+            
             var arrangedVehicleLengthArrayAux: [Vehicle] = [Vehicle]()
             
             //
@@ -358,11 +370,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func setComponentsUI(for character: People){
         
-        // disableViewsInStackView(vehiclesCharacter)
-        // disableViewsInStackView(starshipsCharacter)
-        
-        //stopActivityIndicator()
-        
         activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
         
         self.characterAux = character
@@ -386,13 +393,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         contentLabel[3].text = character.eyeColor
         contentLabel[4].text = character.hairColor
         
-              
+        
         showInfoLabels()
+        visualizeMoreButton()
     }
     
     func setComponentsUI(for vehicle: Vehicle){
         
-        
+        activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
+
         setLabelComponents()
         
         usdButton.setTitleColor(greyColor, for: .normal)
@@ -416,10 +425,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         addSubViewToStackView(buttonsArray)
         showInfoLabels()
+        
     }
     
     func setComponentsUI(for starship: Starship){
         
+        activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
+
         setLabelComponents()
         
         usdButton.setTitleColor(greyColor, for: .normal)
@@ -692,9 +704,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         hairValueLabel.isHidden = false
         englishLabel.isHidden = false
         englishValueLabel.isHidden = false
+        
+    }
+    
+    func visualizeMoreButton() {
         showMoreButton.isHidden = false
         showMoreButton.isUserInteractionEnabled = true
-     
     }
 }
 
