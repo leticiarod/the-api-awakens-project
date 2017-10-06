@@ -63,4 +63,13 @@ class ActivityIndicator {
         
     }
     
+    func addActivityIndicatorToTableView(to view: UIView){
+        
+        activityIndicator.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.gray
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        
+    }
+    
 }

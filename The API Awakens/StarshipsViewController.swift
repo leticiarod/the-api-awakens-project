@@ -22,12 +22,16 @@ class StarshipsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let myGroup = DispatchGroup()
     
+    let activityIndicator = ActivityIndicator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let people = people {
             for url in people.starships{
                 myGroup.enter()
+                activityIndicator.addActivityIndicatorToTableView(to: self.view)
+                activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
                 client.lookupStarship(withUrl: url) { starship, error in
                     if let starshipName = starship?.name  {
                         self.starshipsCharacter.append(starshipName)
@@ -67,15 +71,14 @@ class StarshipsViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+        
         myGroup.notify(queue: .main) {
-        cell.textLabel?.text = self.starshipsCharacter[indexPath.row]
+            self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
+            cell.textLabel?.text = self.starshipsCharacter[indexPath.row]
 
         }
         
         return(cell)
        
     }
-
-  
-    
 }
