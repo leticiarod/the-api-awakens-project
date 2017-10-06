@@ -8,47 +8,42 @@
 
 import UIKit
 
-class StarshipsViewController: UIViewController {
+class StarshipsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var starshipsCharacter: [UIButton] = [UIButton]()
+    var starshipsCharacter: [String] = [String]()
     
     @IBOutlet weak var starshipContainer: UIStackView!
+    
+    @IBOutlet weak var tableView: UITableView!
     
     let client = APIClient()
     
     var people: People? = nil
     
+    let myGroup = DispatchGroup()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-         print("HOLA starships!! 1 ")
-        if let people = people {
-            print("HOLA starships!!: \(people.name)")
-        }
         
         if let people = people {
-        if people.starships.count == 0 {
-            self.createLabelOfEmpty(with: "This character doesn't have any Starships", in: self.starshipContainer)
-        }
-        
-        
-        for url in people.starships{
-            client.lookupStarship(withUrl: url) { starship, error in
-                let button = UIButton()
-                if let starshipName = starship?.name  {
-                    button.setTitle(starshipName, for: .normal)
-                    button.setTitleColor(.black, for: .normal)
-                    button.titleLabel?.adjustsFontSizeToFitWidth = true
-                    self.starshipsCharacter.append(button)
-                    self.starshipContainer.addArrangedSubview(button)
-                    //  self.starshipLabel.isHidden = false
+            for url in people.starships{
+                myGroup.enter()
+                client.lookupStarship(withUrl: url) { starship, error in
+                    if let starshipName = starship?.name  {
+                        self.starshipsCharacter.append(starshipName)
+                        self.myGroup.leave()
+                    }
+                    
                 }
-                
             }
         }
-        }
+ 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -58,14 +53,27 @@ class StarshipsViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let people = people {
+            return(people.starships.count)
+        }
+        else {
+            return 0
+        }
+        
+        }
     
-    func createLabelOfEmpty(with title: String, in stackview: UIStackView){
-        let label: UILabel = UILabel()
-        label.text = title
-        label.textColor = .black
-        label.numberOfLines = 2
-        //label.adjustsFontSizeToFitWidth = true
-        stackview.addArrangedSubview(label)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
+        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+        myGroup.notify(queue: .main) {
+        cell.textLabel?.text = self.starshipsCharacter[indexPath.row]
+
+        }
+        
+        return(cell)
+       
     }
 
   

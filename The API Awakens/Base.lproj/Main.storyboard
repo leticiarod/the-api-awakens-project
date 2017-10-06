@@ -433,22 +433,35 @@
                                 <color key="textColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="O4U-lW-fEw">
-                                <rect key="frame" x="15" y="160" width="345" height="400"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="i6k-m1-Uzm"/>
-                                </constraints>
-                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2GI-iZ-h1f">
+                                <rect key="frame" x="16" y="128" width="343" height="480"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="6U4-07-Zsq">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6U4-07-Zsq" id="XMC-Qm-DPB">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="iOX-1S-4mR" id="63Y-E4-NDv"/>
+                                    <outlet property="delegate" destination="iOX-1S-4mR" id="zfW-DD-PaD"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="2GI-iZ-h1f" firstAttribute="top" secondItem="QlH-sl-gDI" secondAttribute="bottom" constant="8" id="DbQ-iO-hkV"/>
                             <constraint firstItem="QlH-sl-gDI" firstAttribute="leading" secondItem="iyq-eS-yYQ" secondAttribute="leadingMargin" constant="10" id="Joe-jk-9S6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QlH-sl-gDI" secondAttribute="trailing" constant="10" id="LaE-eL-Ahb"/>
-                            <constraint firstItem="O4U-lW-fEw" firstAttribute="top" secondItem="QlH-sl-gDI" secondAttribute="bottom" constant="40" id="LlH-w0-h57"/>
+                            <constraint firstItem="FOD-rN-oLw" firstAttribute="top" secondItem="2GI-iZ-h1f" secondAttribute="bottom" constant="10" id="MNr-lw-4t1"/>
                             <constraint firstItem="QlH-sl-gDI" firstAttribute="top" secondItem="Vev-ym-a3i" secondAttribute="bottom" constant="20" id="SGY-aa-sJm"/>
-                            <constraint firstItem="O4U-lW-fEw" firstAttribute="leading" secondItem="iyq-eS-yYQ" secondAttribute="leading" constant="15" id="WPJ-M7-nCg"/>
-                            <constraint firstAttribute="trailing" secondItem="O4U-lW-fEw" secondAttribute="trailing" constant="15" id="spF-mn-0FF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2GI-iZ-h1f" secondAttribute="trailing" id="hEV-wL-3Bd"/>
+                            <constraint firstItem="2GI-iZ-h1f" firstAttribute="leading" secondItem="iyq-eS-yYQ" secondAttribute="leadingMargin" id="k9d-Kl-o1I"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Starships" id="9SK-vX-eSa">
@@ -463,6 +476,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="starshipContainer" destination="O4U-lW-fEw" id="n8E-qy-nWd"/>
+                        <outlet property="tableView" destination="2GI-iZ-h1f" id="xxB-Ne-HdP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JAO-JS-44a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -483,6 +497,14 @@
                         <subviews>
                             <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="96z-0L-DJG">
                                 <rect key="frame" x="31" y="160" width="313" height="400"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="O4U-lW-fEw">
+                                        <rect key="frame" x="0.0" y="0.0" width="313" height="400"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="400" id="i6k-m1-Uzm"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="Dip-dh-9Iy"/>
                                 </constraints>
