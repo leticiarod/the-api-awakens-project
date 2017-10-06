@@ -129,15 +129,31 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        
         if segue.identifier == "ShowMoreCharacter" {
-            guard let showMoreViewController = segue.destination as? ShowMoreCharacterController else {
+            guard let tabVc = segue.destination as? UITabBarController else {
                 return
             }
-            showMoreViewController.people = self.characterAux
+            guard let vehicleNavigationContainer = tabVc.viewControllers?[0] as? UINavigationController else {
+                return
+            }
             
-           
+            guard let starshipsNavigationContainer = tabVc.viewControllers?[1] as? UINavigationController else {
+                return
+            }
+            
+            guard let vehiclesViewController = vehicleNavigationContainer.viewControllers.first as? ShowMoreCharacterController else {
+                return
+            }
+            guard let starshipsViewController = starshipsNavigationContainer.viewControllers.first as? StarshipsViewController else {
+                return
+            }
+            
+            starshipsViewController.people = self.characterAux
+            vehiclesViewController.people = self.characterAux
         }
-        }
+        
+    }
 
     
     
@@ -147,7 +163,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Go back to the previous ViewController
         _ = navigationController?.popViewController(animated: true)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        print("Hola !!")
     }
     
     // The number of columns of data
@@ -203,12 +218,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         for index in 1...9 {
             myGroup.enter()
             client.searchForPeople(page: index) { people, error in
-                
-            
-                self.peopleArray.append(contentsOf: people)
-                // Connect data:
-                self.picker.delegate = self
-                self.picker.dataSource = self
+            self.peopleArray.append(contentsOf: people)
+            // Connect data:
+            self.picker.delegate = self
+            self.picker.dataSource = self
             myGroup.leave()
             }
             
@@ -345,8 +358,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func setComponentsUI(for character: People){
         
-      //  disableViewsInStackView(vehiclesCharacter)
-      //  disableViewsInStackView(starshipsCharacter)
+        // disableViewsInStackView(vehiclesCharacter)
+        // disableViewsInStackView(starshipsCharacter)
         
         //stopActivityIndicator()
         
@@ -486,17 +499,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         print("populateQuickFactsBar")
         
-        if let arrangedPeopleHeightArray = arrangedPeopleHeightArray{
+        if let arrangedPeopleHeightArray = arrangedPeopleHeightArray {
             self.smallest.text = String(describing: arrangedPeopleHeightArray[0].name)
             self.largest.text = String(describing: arrangedPeopleHeightArray[arrangedPeopleHeightArray.count - 1].name)
         }
         
-        if let arrangedVehicleLengthArray = arrangedVehicleLengthArray{
+        if let arrangedVehicleLengthArray = arrangedVehicleLengthArray {
             self.smallest.text = String(describing: arrangedVehicleLengthArray[0].name)
             self.largest.text = String(describing: arrangedVehicleLengthArray[arrangedVehicleLengthArray.count - 1].name)
         }
         
-        if let arrangedStarshipLengthArray = arrangedStarshipLengthArray{
+        if let arrangedStarshipLengthArray = arrangedStarshipLengthArray {
             self.smallest.text = String(describing: arrangedStarshipLengthArray[0].name)
             self.largest.text = String(describing: arrangedStarshipLengthArray[arrangedStarshipLengthArray.count - 1].name)
         }
@@ -506,18 +519,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func unitsButtonPressed(_ sender: Any){
         
         // 1 m = 100cm = 39,4 in
-        
-        //100 - 39.4
-        //164 - X
-        //x = (164 * 39,4)100 = 64,6
-        //x=164*0.394 = 64.6
-     //   100 - 39.4
-      //  x   - 64.6
-        
-      //  163,9 = 164
-        
-       // 2.54 * 64.6
-        
+    
         let labelValue = englishLabel.text
         
         // To Inch
@@ -544,9 +546,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 heightValueAux = stringHeight
                 heightValueLabel.text = customize(height: stringHeight, for: UnitType.englishMetric)
             }
-            }
         }
     }
+}
     
     //
     func customize(height value: String, for type: UnitType) -> String{
@@ -694,11 +696,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         showMoreButton.isUserInteractionEnabled = true
      
     }
-    
-    
-    
-    }
-
+}
 
 
 extension UIView {
