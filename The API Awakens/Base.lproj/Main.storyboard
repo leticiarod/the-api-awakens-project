@@ -174,12 +174,12 @@
                                                         <color key="textColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tatooine" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="POt-3v-IR7">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vto-vH-XAU">
                                                         <rect key="frame" x="111" y="0.0" width="222" height="46"/>
-                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="4Cv-HN-QVQ">
@@ -262,11 +262,11 @@
                                             <constraint firstAttribute="trailing" secondItem="0ax-R5-aD2" secondAttribute="trailing" id="XVZ-ep-xJL"/>
                                             <constraint firstAttribute="trailing" secondItem="UZd-vj-XBp" secondAttribute="trailing" id="aST-Je-CaT"/>
                                             <constraint firstAttribute="trailing" secondItem="00J-eB-YVo" secondAttribute="trailing" id="bNB-Uy-ucI"/>
-                                            <constraint firstItem="POt-3v-IR7" firstAttribute="leading" secondItem="bPV-Qf-5iU" secondAttribute="leading" id="enN-qZ-GQ5"/>
                                             <constraint firstAttribute="trailing" secondItem="eyK-SJ-GNT" secondAttribute="trailing" id="jWh-Fv-imI"/>
                                             <constraint firstAttribute="trailing" secondItem="4Cv-HN-QVQ" secondAttribute="trailing" id="m10-Hs-8Tg"/>
                                             <constraint firstItem="DIc-Qm-so5" firstAttribute="leading" secondItem="bPV-Qf-5iU" secondAttribute="leading" id="noL-9K-4OB"/>
                                             <constraint firstAttribute="height" constant="230" id="p6b-fo-vgJ"/>
+                                            <constraint firstItem="Vto-vH-XAU" firstAttribute="leading" secondItem="DIc-Qm-so5" secondAttribute="leading" id="u6S-pE-cys"/>
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56a-yp-7sN">
@@ -378,6 +378,7 @@
                     <connections>
                         <outlet property="bornLabel" destination="yFZ-2o-e6F" id="P7P-6s-HkI"/>
                         <outlet property="bornValueLabel" destination="DIc-Qm-so5" id="8Wm-DH-WHB"/>
+                        <outlet property="costTextField" destination="Vto-vH-XAU" id="7TW-sf-Vg9"/>
                         <outlet property="englishLabel" destination="B1U-my-Agi" id="Yhl-Ug-6LP"/>
                         <outlet property="englishValueLabel" destination="W3g-B2-YP7" id="U79-mg-5cd"/>
                         <outlet property="eyesLabel" destination="Qde-Fq-3Bj" id="j4t-Cq-WcI"/>
@@ -387,7 +388,6 @@
                         <outlet property="heightLabel" destination="GEQ-HI-8LS" id="Fao-if-Oq0"/>
                         <outlet property="heightValueLabel" destination="bPV-Qf-5iU" id="ach-zL-wwG"/>
                         <outlet property="homeLabel" destination="AU9-9l-wxk" id="rui-0b-c4B"/>
-                        <outlet property="homeValueLabel" destination="POt-3v-IR7" id="eRb-Fv-OkZ"/>
                         <outlet property="largest" destination="4g6-dB-n5N" id="a9h-ng-uun"/>
                         <outlet property="largestLabel" destination="4g6-dB-n5N" id="ZuG-DI-Rjh"/>
                         <outlet property="picker" destination="Ukx-YD-iNi" id="dh5-M2-qCO"/>
@@ -402,7 +402,6 @@
                         <outletCollection property="labelCollection" destination="Qde-Fq-3Bj" collectionClass="NSMutableArray" id="yCL-fD-bPO"/>
                         <outletCollection property="labelCollection" destination="dg6-2D-jb8" collectionClass="NSMutableArray" id="iSP-hD-9Gt"/>
                         <outletCollection property="contentLabel" destination="DIc-Qm-so5" collectionClass="NSMutableArray" id="k2b-n7-8u1"/>
-                        <outletCollection property="contentLabel" destination="POt-3v-IR7" collectionClass="NSMutableArray" id="BW0-ix-wM9"/>
                         <outletCollection property="contentLabel" destination="bPV-Qf-5iU" collectionClass="NSMutableArray" id="5BY-GT-fXx"/>
                         <outletCollection property="contentLabel" destination="TeY-U2-DKw" collectionClass="NSMutableArray" id="ziz-rf-dGY"/>
                         <outletCollection property="contentLabel" destination="P5M-Vo-Blz" collectionClass="NSMutableArray" id="ZYG-uT-yC4"/>

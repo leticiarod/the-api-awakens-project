@@ -99,7 +99,7 @@ class APIClient {
     }
     
     func lookupPlanet(withUrl url: String, completion: @escaping (Planet?, APIError?) -> Void) {
-        let endpoint = Itunes.vehicles(url: url, page: nil)
+        let endpoint = Itunes.planet(url: url)
         
         performLookupRequest(with: endpoint) { results, error in
             guard let results = results else {
@@ -110,7 +110,6 @@ class APIClient {
             let planet = Planet(json: results)
             completion(planet, nil)
         }
-        
     }
     
     typealias Results = [[String: Any]]
@@ -137,6 +136,7 @@ class APIClient {
     }
     
     private func performLookupRequest(with endpoint: Endpoint, completion: @escaping ([String: Any]?, APIError?) -> Void) {
+        print("cuanto es mi url ! \(endpoint.request)")
         let task = downloader.jsonTask(with: endpoint.request) { json, error in
             DispatchQueue.main.async {
                 guard let json = json else {

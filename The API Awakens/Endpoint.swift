@@ -20,7 +20,6 @@ extension Endpoint {
         var components = URLComponents(string: base)!
         components.path = path
         components.queryItems = queryItems
-        print(components)
         return components
     }
     
@@ -112,6 +111,8 @@ extension Itunes: Endpoint {
             
                                     } 
                                     return result
+        case .planet(let _): var result = [URLQueryItem]()
+                                return result
         default: fatalError()
         }
     }

@@ -33,7 +33,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var bornLabel: UILabel!
     @IBOutlet weak var bornValueLabel: UILabel!
     @IBOutlet weak var homeLabel: UILabel!
-    @IBOutlet weak var homeValueLabel: UILabel!
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var heightValueLabel: UILabel!
     @IBOutlet weak var eyesLabel: UILabel!
@@ -46,6 +45,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var largestLabel: UILabel!
     @IBOutlet weak var showMoreButton: UIButton!
     @IBOutlet weak var stackViewContainer: UIStackView!
+    
+    @IBOutlet weak var costTextField: UITextField!
     
     let client = APIClient()
     var url = ""
@@ -93,6 +94,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Set title by option chosen by the user in the home menu
         switch entityTypeTapped {
         case "characters": self.title = "Characters"
+        costTextField.isUserInteractionEnabled = false
         activityIndicator.addActivityIndicatorToPickerView(view: self.view)
         activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
         searchForPeople()
@@ -149,7 +151,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // The number of rows of data
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
         switch entityTypeTapped {
         case "characters": return self.peopleArray.count
         case "vehicles": return self.vehiclesArray.count
@@ -171,7 +172,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Selects an item from the picker wheel.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
         switch entityTypeTapped {
         case "characters": let url = self.peopleArray[row].url
         activityIndicator.addActivityIndicator(to: self.view)
@@ -298,7 +298,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func searchForVehicles(){
-        
         for index in 1...4 {
             myGroup.enter()
             client.searchForVehicles(page: index) { vehicles, error in
@@ -360,7 +359,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             else {
                 if let planet = planet {
-                    self.contentLabel[1].text = planet.name
+                    self.costTextField.text = planet.name
                 }
             }
         }
@@ -382,11 +381,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         lookupPlanet(by: url)
         
         heightValueAux = character.height
-        
-        contentLabel[2].text = heightValueAux
-        contentLabel[3].text = character.eyeColor
-        contentLabel[4].text = character.hairColor
-        
+        contentLabel[1].text = heightValueAux
+        contentLabel[2].text = character.eyeColor
+        contentLabel[3].text = character.hairColor
         // Shows all the labels of the "Information Box"
         showInfoLabels()
         // Shows the More Button
@@ -414,22 +411,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         costInCredits = vehicle.costInCredits
         
-        contentLabel[1].text = costInCredits
-        contentLabel[1].numberOfLines = 1;
-        contentLabel[1].adjustsFontSizeToFitWidth = true
+        costTextField.text = costInCredits
+        
+        costTextField.adjustsFontSizeToFitWidth = true
         
         heightValueAux = vehicle.length
         
-        contentLabel[2].text = heightValueAux
+        contentLabel[1].text = heightValueAux
         
-        contentLabel[3].text = vehicle.vehicleClass
-        contentLabel[4].text = vehicle.crew
+        contentLabel[2].text = vehicle.vehicleClass
+        contentLabel[3].text = vehicle.crew
         
         // Adds the “Galactic Credits” and "US Dollars" buttons to a stack view.
         addSubViewToStackView(buttonsArray)
         // Shows all the labels of the "Information Box"
         showInfoLabels()
-        
     }
     
     // Sets the corresponding label names according to the Starships entity.
@@ -455,13 +451,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         costInCredits = starship.costInCredits
         
-        contentLabel[1].text = costInCredits
-        contentLabel[1].numberOfLines = 1;
-        contentLabel[1].adjustsFontSizeToFitWidth = true
+        costTextField.text = costInCredits
+        costTextField.adjustsFontSizeToFitWidth = true
         
-        contentLabel[2].text = starship.length
-        contentLabel[3].text = starship.starshipClass
-        contentLabel[4].text = starship.crew
+        contentLabel[1].text = starship.length
+        contentLabel[2].text = starship.starshipClass
+        contentLabel[3].text = starship.crew
         
         // Adds the “Galactic Credits” and "US Dollars" buttons to a stack view.
         addSubViewToStackView(buttonsArray)
@@ -537,7 +532,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if costInCredits != "unknown"{
             if let cost = Double(costInCredits){
                 let costInCreditsValue = cost * 0.62
-                homeValueLabel.text = String(costInCreditsValue.rounded())
+                costTextField.text = String(costInCreditsValue.rounded())
             }
         }
     }
@@ -545,7 +540,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func creditsButtonClicked(sender: UIButton){
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
-        homeValueLabel.text = costInCredits
+        costTextField.text = costInCredits
         
     }
     
@@ -573,7 +568,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         bornLabel.isHidden = true
         bornValueLabel.isHidden = true
         homeLabel.isHidden = true
-        homeValueLabel.isHidden = true
+        costTextField.isHidden = true
         heightLabel.isHidden = true
         heightValueLabel.isHidden = true
         eyesLabel.isHidden = true
@@ -584,6 +579,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         englishValueLabel.isHidden = true
         showMoreButton.isHidden = true
         showMoreButton.isUserInteractionEnabled = false
+        stackViewContainer.isHidden = true
     }
     
     // Sets all labels of the "Information Box" to hidden = false
@@ -592,7 +588,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         bornLabel.isHidden = false
         bornValueLabel.isHidden = false
         homeLabel.isHidden = false
-        homeValueLabel.isHidden = false
+        costTextField.isHidden = false
         heightLabel.isHidden = false
         heightValueLabel.isHidden = false
         eyesLabel.isHidden = false
@@ -601,6 +597,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         hairValueLabel.isHidden = false
         englishLabel.isHidden = false
         englishValueLabel.isHidden = false
+        stackViewContainer.isHidden = false
         
     }
     
@@ -622,7 +619,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         bornLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         bornValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         homeLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        homeValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         heightLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         heightValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         eyesLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
@@ -632,6 +628,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         englishLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         englishValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
         picker.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        costTextField.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        stackViewContainer.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
     }
     
     // Adds custom styles to the Navigation Bar and back button.
