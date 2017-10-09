@@ -19,10 +19,10 @@ class APIClient {
                 completion([], error)
                 return
             }
-            print(results)
+            
             let people  = results.flatMap { People(json: $0) }
-            print(people)
             completion(people,nil)
+            
         }
     }
     
@@ -35,27 +35,12 @@ class APIClient {
                 return
             }
             
-          /*  guard let artistInfo = results.first else {
-                completion(nil, .jsonParsingFailure(message: "Results does not contain artist info."))
-                return
-            }
-            
-            guard let artist = Artist(json: artistInfo) else {
-                completion(nil, .jsonParsingFailure(message: "Could not parse artist information."))
-                return
-            }
-            */
-           // let albumResults = results[1..<results.count]
             let people = People(json: results)
-            print("1 persom \(people?.url)")
-            print("VEHICULOS \(people?.vehicles)")
-            print("STARSHIPS\(people?.starships)")
-            
             completion(people, nil)
         }
         
     }
-
+    
     func searchForStarships(page: Int, completion: @escaping ([Starship], APIError?) -> Void){
         let endpoint = Itunes.starships(url: nil, page: page)
         
@@ -64,9 +49,8 @@ class APIClient {
                 completion([], error)
                 return
             }
-            //print(results)
+            
             let starship  = results.flatMap { Starship(json: $0) }
-           // print(starship)
             completion(starship,nil)
         }
     }
@@ -74,23 +58,18 @@ class APIClient {
     func lookupStarship(withUrl url: String, completion: @escaping (Starship?, APIError?) -> Void) {
         let endpoint = Itunes.starships(url: url, page: nil)
         
-        print("ENDPOINT \(endpoint.request)")
         performLookupRequest(with: endpoint) { results, error in
             guard let results = results else {
                 completion(nil, error)
                 return
             }
             
-    
-            print("result unico \(results)")
-            
             let starship = Starship(json: results)
-            
             completion(starship, nil)
         }
         
     }
-
+    
     func searchForVehicles(page: Int, completion: @escaping ([Vehicle], APIError?) -> Void){
         let endpoint = Itunes.vehicles(url: nil, page: page)
         
@@ -107,18 +86,13 @@ class APIClient {
     func lookupVehicle(withUrl url: String, completion: @escaping (Vehicle?, APIError?) -> Void) {
         let endpoint = Itunes.vehicles(url: url, page: nil)
         
-        print("ENDPOINT \(endpoint.request)")
         performLookupRequest(with: endpoint) { results, error in
             guard let results = results else {
                 completion(nil, error)
                 return
             }
             
-            
-            print("result unico \(results)")
-            
             let vehicle = Vehicle(json: results)
-            
             completion(vehicle, nil)
         }
         
@@ -127,18 +101,13 @@ class APIClient {
     func lookupPlanet(withUrl url: String, completion: @escaping (Planet?, APIError?) -> Void) {
         let endpoint = Itunes.vehicles(url: url, page: nil)
         
-        print("ENDPOINT \(endpoint.request)")
         performLookupRequest(with: endpoint) { results, error in
             guard let results = results else {
                 completion(nil, error)
                 return
             }
             
-            
-            print("result unico \(results)")
-            
             let planet = Planet(json: results)
-            
             completion(planet, nil)
         }
         

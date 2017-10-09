@@ -57,22 +57,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var darkGreyColor = UIColor(red:0.11, green:0.13, blue:0.14, alpha:1.0)
     var greyColor = UIColor(red:0.72, green:0.72, blue:0.72, alpha:1.0)
     
-    //
-    var peopleHeightArray: [Int] = [Int]()
-    
-    //
-    var vehiclesLengthArray: [Int] = [Int]()
-    
-    //
-    var starshipsLengthArray: [Int] = [Int]()
-    
-    
-    var valueArray: [Double] = [Double]()
-    
-    //
+    // Used to store the hegiht or lenght value of an entity globally.
     var heightValueAux = ""
     
-    //
+    // Used to store the cost in credits value of an entity globally.
     var costInCredits = ""
     
     let usdButton = UIButton()
@@ -80,12 +68,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var buttonsArray: [UIButton] = [UIButton]()
     
-    
-    
     var characterAux: People? = nil
     
     let activityIndicator = ActivityIndicator()
     
+    /* DispatchGroup allows for aggregate synchronization of work. You can use them to submit multiple different work items and track when they all complete, even though they might run on different queues. This behavior can be helpful when progress can’t be made until all of the specified tasks are complete. */
+    let myGroup = DispatchGroup()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,43 +84,32 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Customize navigation bar of view controller
         customizeNavigationBar()
         
-        //
+        // Hide the labels corrosponding to the info of each entity while the picker is loading.
         hideInfoLabels()
         
-        //
+        // Creates the exchange buttons.
         createExchangeButtons()
         
         // Set title by option chosen by the user in the home menu
         switch entityTypeTapped {
         case "characters": self.title = "Characters"
-        
-       activityIndicator.addActivityIndicatorToPickerView(view: self.view)
-                            activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-        
-                            searchForPeople()
-        case "vehicles": self.title = "Vehicles"
-        
         activityIndicator.addActivityIndicatorToPickerView(view: self.view)
         activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-            searchForVehicles()
+        searchForPeople()
+        case "vehicles": self.title = "Vehicles"
+        activityIndicator.addActivityIndicatorToPickerView(view: self.view)
+        activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
+        searchForVehicles()
         case "starships": self.title = "Starships"
         showMoreButton.isHidden = true
         activityIndicator.addActivityIndicatorToPickerView(view: self.view)
         activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-            searchForStarships()
+        searchForStarships()
         default: break
         }
-        
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         
         if segue.identifier == "ShowMoreCharacter" {
             guard let tabVc = segue.destination as? UITabBarController else {
@@ -152,18 +129,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             guard let starshipsViewController = starshipsNavigationContainer.viewControllers.first as? StarshipsViewController else {
                 return
             }
-            
+    
             starshipsViewController.people = self.characterAux
             vehiclesViewController.people = self.characterAux
         }
         
     }
-
-    
     
     func back(sender: UIBarButtonItem) {
-        // Perform your custom actions
-        // ...
         // Go back to the previous ViewController
         _ = navigationController?.popViewController(animated: true)
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -178,12 +151,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
         switch entityTypeTapped {
-        case "characters": print("number of rows! \(self.peopleArray.count)")
-                            return self.peopleArray.count
-        case "vehicles": print("number of rows! \(self.vehiclesArray.count)")
-                        return self.vehiclesArray.count
-        case "starships": print("number of rows! \(self.starshipsArray.count)")
-                        return self.starshipsArray.count
+        case "characters": return self.peopleArray.count
+        case "vehicles": return self.vehiclesArray.count
+        case "starships": return self.starshipsArray.count
         default: fatalError()
         }
     }
@@ -192,77 +162,71 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch entityTypeTapped {
         case "characters":
-        return self.peopleArray[row].name
+            return self.peopleArray[row].name
         case "vehicles": return self.vehiclesArray[row].name
         case "starships": return self.starshipsArray[row].name
         default: fatalError()
         }
-        
-        
     }
     
+    // Selects an item from the picker wheel.
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         switch entityTypeTapped {
         case "characters": let url = self.peopleArray[row].url
-                           activityIndicator.addActivityIndicator(to: self.view)
-                           activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-                           lookupCharacter(by: url)
+        activityIndicator.addActivityIndicator(to: self.view)
+        activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
+        lookupCharacter(by: url)
         case "vehicles":   let url = self.vehiclesArray[row].url
         activityIndicator.addActivityIndicator(to: self.view)
         activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-                           lookupVehicle(by: url)
+        lookupVehicle(by: url)
         case "starships":  let url = self.starshipsArray[row].url
         activityIndicator.addActivityIndicator(to: self.view)
         activityIndicator.startActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-                           lookupStarship(by: url)
+        lookupStarship(by: url)
         default: fatalError()
         }
     }
-
+    
     func searchForPeople(){
-        let myGroup = DispatchGroup()
         for index in 1...9 {
             myGroup.enter()
             client.searchForPeople(page: index) { people, error in
                 if let error = error {
                     self.show(error: error, for: .character, url: nil)
                 } else {
-                   self.peopleArray.append(contentsOf: people)
+                    self.peopleArray.append(contentsOf: people)
                     // Connect data:
                     self.picker.delegate = self
                     self.picker.dataSource = self
-                    myGroup.leave()
+                    self.myGroup.leave()
                 }
-                }
+            }
         }
-
+        
         myGroup.notify(queue: .main) {
+            //Finished all requests.
             
-            print("Finished all requests.")
-            
+            // Stops the activity indicator
             self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
             
             var arrangedPeopleHeightArrayAux: [People] = [People]()
             
-            //
             for character in self.peopleArray {
                 if let height = String(character.height) {
                     if height != "unknown" {
-                    arrangedPeopleHeightArrayAux.append(character)
+                        arrangedPeopleHeightArrayAux.append(character)
                     }
                 }
             }
             
-            //
+            // Arranges the height array from smallest to largest to populate the quick facts bar.
             let arrangedPeopleHeightArray: [People] = self.arrangeArray(arrangedPeopleHeightArrayAux)
             
-            //
+            // Populates Quick Facts Bar.
             self.populateQuickFactsBar(arrangedPeopleHeightArray,nil,nil)
-
         }
-        
-        
     }
     
     func lookupCharacter(by url: String){
@@ -279,8 +243,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func searchForStarships(){
-        let myGroup = DispatchGroup()
-         for index in 1...4 {
+        for index in 1...4 {
             myGroup.enter()
             client.searchForStarships(page: index) { starships, error in
                 if let error = error {
@@ -291,21 +254,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     // Connect data:
                     self.picker.delegate = self
                     self.picker.dataSource = self
-                    myGroup.leave()
+                    self.myGroup.leave()
                 }
-            
+                
             }
         }
         
         myGroup.notify(queue: .main) {
+            //Finished all requests.
             
-            print("Finished all requests.")
-            
-             self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
+            // Stops the activity indicator
+            self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
             
             var arrangedStarshipLengthArrayAux: [Starship] = [Starship]()
             
-            //
             for starship in self.starshipsArray {
                 if let length = String(starship.length) {
                     if length != "unknown" && length != "1,600" {
@@ -314,12 +276,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
             }
             
-            //
-           let arrangedStarshipLengthArray: [Starship] = self.arrangeArray(arrangedStarshipLengthArrayAux)
+            // Arranges length array from smallest to largest to populate the quick facts bar.
+            let arrangedStarshipLengthArray: [Starship] = self.arrangeArray(arrangedStarshipLengthArrayAux)
             
-            //
-           self.populateQuickFactsBar(nil,nil,arrangedStarshipLengthArray)
-            
+            // Populates Quick Facts Bar.
+            self.populateQuickFactsBar(nil,nil,arrangedStarshipLengthArray)
         }
     }
     
@@ -333,14 +294,12 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     self.setComponentsUI(for: starship)
                 }
             }
-            
         }
-
     }
     
     func searchForVehicles(){
-         let myGroup = DispatchGroup()
-         for index in 1...4 {
+        
+        for index in 1...4 {
             myGroup.enter()
             client.searchForVehicles(page: index) { vehicles, error in
                 if let error = error {
@@ -351,20 +310,19 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     // Connect data:
                     self.picker.delegate = self
                     self.picker.dataSource = self
-                    myGroup.leave()
+                    self.myGroup.leave()
                 }
             }
         }
         
         myGroup.notify(queue: .main) {
+            //Finished all requests.
             
-            print("Finished all requests.")
-            
-             self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
+            // Stops the activity indicator.
+            self.activityIndicator.stopActivityIndicator(activityIndicator: self.activityIndicator.activityIndicator)
             
             var arrangedVehicleLengthArrayAux: [Vehicle] = [Vehicle]()
             
-            //
             for vehicle in self.vehiclesArray {
                 if let length = String(vehicle.length) {
                     if length != "unknown"{
@@ -373,15 +331,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
             }
             
-            //
+            // Arranges length array from smallest to largest to populate the quick facts bar.
             let arrangedVehicleLengthArray: [Vehicle] = self.arrangeArray(arrangedVehicleLengthArrayAux)
             
-            //
+            // Populates Quick Facts Bar.
             self.populateQuickFactsBar(nil,arrangedVehicleLengthArray,nil)
             
         }
-        
-        
     }
     
     func lookupVehicle(by url: String){
@@ -408,11 +364,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 }
             }
         }
-
     }
-    
+    // Sets the corresponding label names according to the Characters entity.
     func setComponentsUI(for character: People){
-        
+        // Stops the activity indicator
         activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
         
         self.characterAux = character
@@ -423,37 +378,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         contentLabel[0].text = character.birthYear
         
-      /*  client.lookupPlanet(withUrl: character.homeworldUrl) { planet, error in
-            if let error = error {
-             self.show(error: error, for: .planet)
-            }
-            else {
-                if let planet = planet {
-                    self.contentLabel[1].text = planet.name
-                }
-            }
-        }
-         */
-        
         let url = character.homeworldUrl
         lookupPlanet(by: url)
         
         heightValueAux = character.height
         
         contentLabel[2].text = heightValueAux
-            //customize(height: heightValueAux, for: UnitType.englishMetric)
         contentLabel[3].text = character.eyeColor
         contentLabel[4].text = character.hairColor
         
-        
+        // Shows all the labels of the "Information Box"
         showInfoLabels()
+        // Shows the More Button
         visualizeMoreButton()
     }
     
+    // Sets the corresponding label names according to the Vehicles entity.
     func setComponentsUI(for vehicle: Vehicle){
-        
+        // Stops the activity indicator
         activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-
+        
+        //Sets the corresponding text to the labels according to the vehicles info.
         setLabelComponents()
         
         englishLabel.text = "English"
@@ -461,10 +406,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
-
+        
         titleLabel.text = vehicle.name
         
-
         contentLabel[0].text = vehicle.manufacturer
         contentLabel[0].adjustsFontSizeToFitWidth = true
         
@@ -481,15 +425,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         contentLabel[3].text = vehicle.vehicleClass
         contentLabel[4].text = vehicle.crew
         
+        // Adds the “Galactic Credits” and "US Dollars" buttons to a stack view.
         addSubViewToStackView(buttonsArray)
+        // Shows all the labels of the "Information Box"
         showInfoLabels()
         
     }
     
+    // Sets the corresponding label names according to the Starships entity.
     func setComponentsUI(for starship: Starship){
         
+        // Stops the activity indicator
         activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
-
+        
+        //Sets the corresponding text to the labels according to the starships info.
         setLabelComponents()
         
         englishLabel.text = "English"
@@ -497,14 +446,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
-
         
         titleLabel.text = starship.name
         
         contentLabel[0].text = starship.manufacturer
         contentLabel[0].numberOfLines = 1;
         contentLabel[0].adjustsFontSizeToFitWidth = true
-
+        
         costInCredits = starship.costInCredits
         
         contentLabel[1].text = costInCredits
@@ -515,52 +463,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         contentLabel[3].text = starship.starshipClass
         contentLabel[4].text = starship.crew
         
+        // Adds the “Galactic Credits” and "US Dollars" buttons to a stack view.
         addSubViewToStackView(buttonsArray)
         
+        // Shows all the labels of the "Information Box"
         showInfoLabels()
-        
     }
     
-    func setLabelComponents(){
-        labelCollection[0].text = "Make"
-        labelCollection[1].text = "Cost"
-        labelCollection[2].text = "Length"
-        labelCollection[3].text = "Class"
-        labelCollection[4].text = "Crew"
-    }
-
-    func addBottomBorder() {
-        bornLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        bornValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        homeLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        homeValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        heightLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        heightValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        eyesLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        eyesValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        hairLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        hairValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        englishLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        englishValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-        picker.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
-    }
-    
-    func customizeNavigationBar() {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = darkGreyColor
-        
-        let textAttributes = [NSForegroundColorAttributeName:lightGreyColor, NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)] as [String : Any]
-        
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationController?.navigationBar.tintColor = lightGreyColor
-        
-        self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewController.back(sender:)))
-        self.navigationItem.leftBarButtonItem = newBackButton
-        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30)], for: UIControlState.normal)
-    }
-    
+    // Sorts a given array of generic type from smallest to largest.
     func arrangeArray<T: Comparable>(_ array: [T]) -> [T]{
         
         let ascendingSizes = array.sorted(by: { $0 < $1 })
@@ -568,9 +478,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return ascendingSizes
     }
     
+    // Populates the quick facts bar.
     func populateQuickFactsBar(_ arrangedPeopleHeightArray: [People]?, _ arrangedVehicleLengthArray: [Vehicle]?,_ arrangedStarshipLengthArray: [Starship]?){
-        
-        print("populateQuickFactsBar")
         
         if let arrangedPeopleHeightArray = arrangedPeopleHeightArray {
             self.smallest.text = String(describing: arrangedPeopleHeightArray[0].name)
@@ -590,132 +499,41 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     
     @IBAction func unitsButtonPressed(_ sender: Any){
-        
-        print("unitsButtonPressed")
         // 1 m = 100cm = 39,4 in
-    
         let labelValue = englishLabel.text
-        
         // To Inch
         if labelValue == "English" {
             englishLabel.text = "British"
             englishValueLabel.setTitle("Units", for: .normal)
             if  heightValueAux != "unknown" {
                 if let doubleHeightValue = Double(heightValueAux) {
-                    print("doubleHeightValue \(doubleHeightValue)")
-                let value = doubleHeightValue * 0.394
-                    print("value \(value)")
-                let stringHeight = String(value.rounded())
-                    print("stringHeight \(stringHeight)")
-                heightValueAux = stringHeight
+                    let value = doubleHeightValue * 0.394
+                    let stringHeight = String(value.rounded())
+                    heightValueAux = stringHeight
                     heightValueLabel.text = customize(height: stringHeight, for: UnitType.BritishUnits)
+                }
             }
         }
-        }
-        // To meters
+            // To meters
         else {
             englishLabel.text = "English"
             englishValueLabel.setTitle("Metric", for: .normal)
             if heightValueAux != "unknown" {
-               if let doubleHeightValue = Double(heightValueAux) {
-                print("doubleHeightValue \(doubleHeightValue)")
-                let value = doubleHeightValue * 2.54
-                print("value \(value)")
-                let stringHeight = String(value.rounded())
-                print("stringHeight \(stringHeight)")
-                heightValueAux = stringHeight
-                heightValueLabel.text = customize(height: stringHeight, for: UnitType.englishMetric)
+                if let doubleHeightValue = Double(heightValueAux) {
+                    let value = doubleHeightValue * 2.54
+                    let stringHeight = String(value.rounded())
+                    heightValueAux = stringHeight
+                    heightValueLabel.text = customize(height: stringHeight, for: UnitType.englishMetric)
+                }
             }
         }
     }
-}
-    
-    //
-    func customize(height value: String, for type: UnitType) -> String{
-        print("size del string \(value.characters.count) \(value)")
-        switch value.characters.count {
-            
-        case 2:
-            if type == .englishMetric {
-            return "0.\(value)m"
-                
-            }
-            else {
-            return "0.\(value)in"}
-        case 3: let toIndex = value.index(value.startIndex, offsetBy: 1)
-                let fromIndex = value.index(value.startIndex, offsetBy: 1)
-        if type == .englishMetric {
-            if value.contains("."){
-                let fromIndex = value.index(value.startIndex, offsetBy: 2)
-                print("\(value.substring(to: toIndex))")
-                print("\(value.substring(from: fromIndex))")
-                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
-            }
-            else  {
-                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))m"
-            }
-        }
-        else {
-            if value.contains("."){
-                let fromIndex = value.index(value.startIndex, offsetBy: 2)
-                print("\(value.substring(to: toIndex))")
-                print("\(value.substring(from: fromIndex))")
-                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
-            }
-            else {
-                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
-            }
-            
-            }
-            
-        case 4: let index = value.index(value.startIndex, offsetBy: 2)
-        if type == .englishMetric {
-                        return "0.\(value.substring(to: index))m"
-            }
-        else {
-            return "0.\(value.substring(to: index))in"
-            }
-        case 5: //166.0
-            let toIndex = value.index(value.startIndex, offsetBy: 1)
-            //let fromIndex = value.index(value.startIndex, offsetBy: 1)
-        let start = value.index(value.startIndex, offsetBy: 1)
-        let end = value.index(value.endIndex, offsetBy: -2)
-        let range = start..<end
-            if type == .englishMetric {
-            return "\(value.substring(to: toIndex)).\(value.substring(with: range))m"
-            }
-            else{
-            return "\(value.substring(to: toIndex)).\(value.substring(with: range))in"
-            }
-        default:
-            //
-            fatalError()
-        }
-    }
-    
-    //  Given an array of buttons, this buttons are added to the stack view menu.
-    func addSubViewToStackView(_ array: [UIButton]){
-        for button in array {
-            stackViewContainer.addArrangedSubview(button)
-        }
-    }
-    
-    // Hide the buttons added to the stack view menu.
-    func disableViewsInStackView(_ array: [UIButton]){
-        for button in array {
-            button.isHidden = true
-            button.isEnabled = false
-        }
-    }
-
-     //1 Credit = 0,62 USD
     
     func usdButtonClicked(sender: UIButton){
-        print("usdButtonClicked")
-        
+        //1 Credit = 0,62 USD
         usdButton.setTitleColor(.white, for: .normal)
         creditsButton.setTitleColor(greyColor, for: .normal)
-       
+        
         if costInCredits != "unknown"{
             if let cost = Double(costInCredits){
                 let costInCreditsValue = cost * 0.62
@@ -725,14 +543,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func creditsButtonClicked(sender: UIButton){
-        print("creditsButtonClicked")
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
-        
         homeValueLabel.text = costInCredits
         
     }
     
+    // MARK: - Helper Methods
+    
+    // USER INTERFACE
+    
+    // Creates buttons “Galactic Credits” and "US Dollars" to later convert from “Galactic Credits” to "US Dollars" and viceversa.
     func createExchangeButtons(){
         usdButton.setTitle("USD", for: .normal)
         usdButton.setTitleColor(greyColor, for: .normal)
@@ -746,7 +567,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         buttonsArray.append(creditsButton)
     }
     
-    // sets all labels to visible = false
+    // Sets all labels to visible = false
     func hideInfoLabels(){
         titleLabel.isHidden = true
         bornLabel.isHidden = true
@@ -765,6 +586,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         showMoreButton.isUserInteractionEnabled = false
     }
     
+    // Sets all labels of the "Information Box" to hidden = false
     func showInfoLabels(){
         titleLabel.isHidden = false
         bornLabel.isHidden = false
@@ -782,29 +604,138 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
     }
     
+    // Sets the showMoreButton to hidden = false so when user selects the Character option in the home screen can see the "Show More" option.
     func visualizeMoreButton() {
         showMoreButton.isHidden = false
         showMoreButton.isUserInteractionEnabled = true
     }
     
-    // Create an UIAlertController
+    //  Given an array of buttons, this buttons are added to the stack view menu.
+    func addSubViewToStackView(_ array: [UIButton]){
+        for button in array {
+            stackViewContainer.addArrangedSubview(button)
+        }
+    }
+    
+    // Adds a bottom border to the labels of the "Info box" when all the related fields on the screen are being populated.
+    func addBottomBorder() {
+        bornLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        bornValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        homeLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        homeValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        heightLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        heightValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        eyesLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        eyesValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        hairLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        hairValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        englishLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        englishValueLabel.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+        picker.addBottomBorderWithColor(color: UIColor.lightGray, width: 0.5)
+    }
+    
+    // Adds custom styles to the Navigation Bar and back button.
+    func customizeNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = darkGreyColor
+        
+        let textAttributes = [NSForegroundColorAttributeName:lightGreyColor, NSFontAttributeName: UIFont.boldSystemFont(ofSize: 20)] as [String : Any]
+        
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationController?.navigationBar.tintColor = lightGreyColor
+        
+        self.navigationItem.hidesBackButton = true
+        let newBackButton = UIBarButtonItem(title: "<", style: UIBarButtonItemStyle.plain, target: self, action: #selector(ViewController.back(sender:)))
+        self.navigationItem.leftBarButtonItem = newBackButton
+        navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 30)], for: UIControlState.normal)
+    }
+    
+    // Gives format to the values of height and length according to the given unit type and size.
+    func customize(height value: String, for type: UnitType) -> String{
+        switch value.characters.count {
+        case 2:
+            if type == .englishMetric {
+                return "0.\(value)m"
+            }
+            else {
+                return "0.\(value)in"}
+        case 3: let toIndex = value.index(value.startIndex, offsetBy: 1)
+        let fromIndex = value.index(value.startIndex, offsetBy: 1)
+        if type == .englishMetric {
+            if value.contains("."){
+                let fromIndex = value.index(value.startIndex, offsetBy: 2)
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            else  {
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))m"
+            }
+        }
+        else {
+            if value.contains("."){
+                let fromIndex = value.index(value.startIndex, offsetBy: 2)
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            else {
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            
+            }
+        case 4: let index = value.index(value.startIndex, offsetBy: 2)
+        if type == .englishMetric {
+            return "0.\(value.substring(to: index))m"
+        }
+        else {
+            return "0.\(value.substring(to: index))in"
+            }
+        case 5:
+            let toIndex = value.index(value.startIndex, offsetBy: 1)
+            let start = value.index(value.startIndex, offsetBy: 1)
+            let end = value.index(value.endIndex, offsetBy: -2)
+            let range = start..<end
+            if type == .englishMetric {
+                return "\(value.substring(to: toIndex)).\(value.substring(with: range))m"
+            }
+            else{
+                return "\(value.substring(to: toIndex)).\(value.substring(with: range))in"
+            }
+        default:
+            //
+            fatalError()
+        }
+    }
+    
+    // Sets the corresponding text to the labels in case the entity be a Vehicle or a Starship.
+    func setLabelComponents(){
+        labelCollection[0].text = "Make"
+        labelCollection[1].text = "Cost"
+        labelCollection[2].text = "Length"
+        labelCollection[3].text = "Class"
+        labelCollection[4].text = "Crew"
+    }
+    
+    
+    // - ERRORS
+    
+    // Create an UIAlertController to show the error.
     func createAlert(with message: String, for typeOfItem: ElementType, url: String?){
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
             //execute some code when this option is selected
             switch typeOfItem {
             case .character: self.searchForPeople()
             case .vehicle: self.searchForVehicles()
             case .starship: self.searchForStarships()
             case .planet:
-                        if let url = url {
-                            self.lookupPlanet(by: url)
-                        }
+                if let url = url {
+                    self.lookupPlanet(by: url)
+                }
             }
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Creates and Alert according to the error and the type of entity (Character, Vehicle or Starship).
     func show(error: APIError, for typeOfElement: ElementType, url: String?){
         if case .invalidData = error {
             self.createAlert(with: "Invalid data", for: typeOfElement, url: url)
@@ -837,7 +768,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
 }
 
-
 extension UIView {
     func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
         let border = CALayer()
@@ -845,5 +775,4 @@ extension UIView {
         border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: frame.size.width, height: width)
         self.layer.addSublayer(border)
     }
-    
 }

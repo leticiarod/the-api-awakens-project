@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "529258257.602354"
+            timestampString = "529263730.661407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
             landmarkName = "setComponentsUI(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "529258257.602354"
+            timestampString = "529263730.661407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "568"
-            endingLineNumber = "568"
+            startingLineNumber = "478"
+            endingLineNumber = "478"
             landmarkName = "arrangeArray(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "529258257.602354"
+            timestampString = "529263730.661407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "604"
-            endingLineNumber = "604"
+            startingLineNumber = "509"
+            endingLineNumber = "509"
             landmarkName = "unitsButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "529258257.602354"
+            timestampString = "529263730.661407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "268"
-            endingLineNumber = "268"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "lookupCharacter(by:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "529258257.602354"
+            timestampString = "529263730.661407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "489"
-            endingLineNumber = "489"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "setComponentsUI(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "The API Awakens/ViewController.swift"
-            timestampString = "529258257.602354"
+            timestampString = "529263730.661407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
             landmarkName = "searchForStarships()"
             landmarkType = "7">
             <Locations>

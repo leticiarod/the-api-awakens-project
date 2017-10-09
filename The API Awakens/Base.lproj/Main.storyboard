@@ -38,7 +38,6 @@
                                                     <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="charactersButtonPressed:" destination="D0q-k6-gYD" eventType="touchUpInside" id="Abz-yW-MKp"/>
                                                     <segue destination="BYZ-38-t0r" kind="show" identifier="characters" id="WhS-zn-ZSb"/>
                                                 </connections>
                                             </button>
@@ -72,7 +71,6 @@
                                                     <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="vehiclesButtonPressed:" destination="D0q-k6-gYD" eventType="touchUpInside" id="wXV-Qy-kg3"/>
                                                     <segue destination="BYZ-38-t0r" kind="show" identifier="vehicles" id="18n-tm-UnA"/>
                                                 </connections>
                                             </button>
@@ -98,7 +96,6 @@
                                                     <color key="titleColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="starshipsButtonPressed:" destination="D0q-k6-gYD" eventType="touchUpInside" id="oI1-3Y-Vis"/>
                                                     <segue destination="BYZ-38-t0r" kind="show" identifier="starships" id="DYn-Lg-AwG"/>
                                                 </connections>
                                             </button>
