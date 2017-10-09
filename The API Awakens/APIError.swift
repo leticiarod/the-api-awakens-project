@@ -15,3 +15,5 @@ enum APIError: Error {
     case invalidData
     case jsonParsingFailure(message: String)
 }
+
+

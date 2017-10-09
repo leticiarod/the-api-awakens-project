@@ -434,7 +434,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2GI-iZ-h1f">
-                                <rect key="frame" x="16" y="128" width="343" height="480"/>
+                                <rect key="frame" x="16" y="150" width="343" height="458"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="6U4-07-Zsq">
@@ -455,7 +455,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="2GI-iZ-h1f" firstAttribute="top" secondItem="QlH-sl-gDI" secondAttribute="bottom" constant="8" id="DbQ-iO-hkV"/>
+                            <constraint firstItem="2GI-iZ-h1f" firstAttribute="top" secondItem="QlH-sl-gDI" secondAttribute="bottom" constant="30" id="DbQ-iO-hkV"/>
                             <constraint firstItem="QlH-sl-gDI" firstAttribute="leading" secondItem="iyq-eS-yYQ" secondAttribute="leadingMargin" constant="10" id="Joe-jk-9S6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QlH-sl-gDI" secondAttribute="trailing" constant="10" id="LaE-eL-Ahb"/>
                             <constraint firstItem="FOD-rN-oLw" firstAttribute="top" secondItem="2GI-iZ-h1f" secondAttribute="bottom" constant="10" id="MNr-lw-4t1"/>
@@ -475,7 +475,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="starshipContainer" destination="O4U-lW-fEw" id="n8E-qy-nWd"/>
                         <outlet property="tableView" destination="2GI-iZ-h1f" id="xxB-Ne-HdP"/>
                     </connections>
                 </viewController>
@@ -495,35 +494,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="left" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="96z-0L-DJG">
-                                <rect key="frame" x="31" y="160" width="313" height="400"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="O4U-lW-fEw">
-                                        <rect key="frame" x="0.0" y="0.0" width="313" height="400"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="400" id="i6k-m1-Uzm"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="Dip-dh-9Iy"/>
-                                </constraints>
-                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vehicles" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gah-Kb-8wU">
                                 <rect key="frame" x="26" y="84" width="323" height="36"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                                 <color key="textColor" red="0.49019607840000001" green="0.81176470590000005" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="z6M-Cl-WoI">
+                                <rect key="frame" x="16" y="150" width="343" height="458"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="hnh-Q8-Ppq">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hnh-Q8-Ppq" id="tuQ-wD-OWz">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="2Pn-4o-LGy" id="lLU-NC-ffG"/>
+                                    <outlet property="delegate" destination="2Pn-4o-LGy" id="EYo-pu-pVd"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="96z-0L-DJG" firstAttribute="top" secondItem="gah-Kb-8wU" secondAttribute="bottom" constant="40" id="RZC-72-ajJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="96z-0L-DJG" secondAttribute="trailing" constant="15" id="Wui-g3-42j"/>
+                            <constraint firstItem="z6M-Cl-WoI" firstAttribute="top" secondItem="gah-Kb-8wU" secondAttribute="bottom" constant="30" id="4UQ-Jw-14G"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="z6M-Cl-WoI" secondAttribute="trailing" id="IcY-Wx-a6a"/>
                             <constraint firstItem="gah-Kb-8wU" firstAttribute="leading" secondItem="cUO-uZ-3LE" secondAttribute="leadingMargin" constant="10" id="aI5-7l-rvq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gah-Kb-8wU" secondAttribute="trailing" constant="10" id="aST-Q7-Khy"/>
+                            <constraint firstItem="KAe-fe-Rjw" firstAttribute="top" secondItem="z6M-Cl-WoI" secondAttribute="bottom" constant="10" id="aXL-jq-dE4"/>
                             <constraint firstItem="gah-Kb-8wU" firstAttribute="top" secondItem="6LA-B5-V8l" secondAttribute="bottom" constant="20" id="csT-Ca-CjC"/>
-                            <constraint firstItem="96z-0L-DJG" firstAttribute="leading" secondItem="cUO-uZ-3LE" secondAttribute="leadingMargin" constant="15" id="fZc-GN-uF8"/>
+                            <constraint firstItem="z6M-Cl-WoI" firstAttribute="leading" secondItem="cUO-uZ-3LE" secondAttribute="leadingMargin" id="wWC-oU-Gdj"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Vehicles" id="34r-as-5I3"/>
@@ -535,7 +539,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="vehicleContainer" destination="96z-0L-DJG" id="Far-Gz-Frb"/>
+                        <outlet property="tableView" destination="z6M-Cl-WoI" id="hux-IA-iHQ"/>
                         <outlet property="vehicleLabel" destination="gah-Kb-8wU" id="i16-D1-hhA"/>
                     </connections>
                 </viewController>
@@ -546,7 +550,6 @@
         <!--Navigation Controller-->
         <scene sceneID="I6W-Us-oa2">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="pdW-NV-hFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ncg-Q9-vfq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Gn-EM-XN3">
@@ -558,6 +561,7 @@
                         <segue destination="D0q-k6-gYD" kind="relationship" relationship="rootViewController" id="Fi2-GT-X0R"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pdW-NV-hFR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1074.4000000000001" y="20.239880059970016"/>
         </scene>
@@ -567,6 +571,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="bIB-7p-z3I" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Gcb-np-O9W">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
@@ -582,7 +587,6 @@
         <!--Starships-->
         <scene sceneID="SP6-2w-jUu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0d6-hY-U4O" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4xM-7T-fg6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Starships" id="U08-xL-uxb"/>
                     <toolbarItems/>
@@ -595,6 +599,7 @@
                         <segue destination="iOX-1S-4mR" kind="relationship" relationship="rootViewController" id="heD-hJ-eLt"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0d6-hY-U4O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2528.8000000000002" y="-419.64017991004499"/>
         </scene>

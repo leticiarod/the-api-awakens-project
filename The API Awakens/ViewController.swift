@@ -13,6 +13,13 @@ enum UnitType {
     case BritishUnits
 }
 
+enum ElementType {
+    case character
+    case vehicle
+    case starship
+    case planet
+}
+
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
@@ -37,15 +44,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var englishValueLabel: UIButton!
     @IBOutlet weak var smallestLabel: UILabel!
     @IBOutlet weak var largestLabel: UILabel!
-    
-    
     @IBOutlet weak var showMoreButton: UIButton!
-    
-    
     @IBOutlet weak var stackViewContainer: UIStackView!
-    
-    
-    
     
     let client = APIClient()
     var url = ""
@@ -203,7 +203,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        
         switch entityTypeTapped {
         case "characters": let url = self.peopleArray[row].url
                            activityIndicator.addActivityIndicator(to: self.view)
@@ -226,15 +225,18 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         for index in 1...9 {
             myGroup.enter()
             client.searchForPeople(page: index) { people, error in
-            self.peopleArray.append(contentsOf: people)
-            // Connect data:
-            self.picker.delegate = self
-            self.picker.dataSource = self
-            myGroup.leave()
-            }
-            
+                if let error = error {
+                    self.show(error: error, for: .character, url: nil)
+                } else {
+                   self.peopleArray.append(contentsOf: people)
+                    // Connect data:
+                    self.picker.delegate = self
+                    self.picker.dataSource = self
+                    myGroup.leave()
+                }
+                }
         }
-        
+
         myGroup.notify(queue: .main) {
             
             print("Finished all requests.")
@@ -265,8 +267,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func lookupCharacter(by url: String){
         client.lookupCharacter(withUrl: url) { people, error in
-            if let people = people {
-            self.setComponentsUI(for: people)
+            if let error = error {
+                self.show(error: error, for: .character, url: nil)
+            }
+            else {
+                if let people = people {
+                    self.setComponentsUI(for: people)
+                }
             }
         }
     }
@@ -276,11 +283,17 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
          for index in 1...4 {
             myGroup.enter()
             client.searchForStarships(page: index) { starships, error in
-            self.starshipsArray.append(contentsOf: starships)
-            // Connect data:
-            self.picker.delegate = self
-            self.picker.dataSource = self
-            myGroup.leave()
+                if let error = error {
+                    self.show(error: error, for: .starship, url: nil)
+                }
+                else {
+                    self.starshipsArray.append(contentsOf: starships)
+                    // Connect data:
+                    self.picker.delegate = self
+                    self.picker.dataSource = self
+                    myGroup.leave()
+                }
+            
             }
         }
         
@@ -312,9 +325,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func lookupStarship(by url: String){
         client.lookupStarship(withUrl: url) { starship, error in
-            if let starship = starship {
-                self.setComponentsUI(for: starship)
+            if let error = error {
+                self.show(error: error, for: .starship, url: nil)
             }
+            else {
+                if let starship = starship {
+                    self.setComponentsUI(for: starship)
+                }
+            }
+            
         }
 
     }
@@ -324,11 +343,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
          for index in 1...4 {
             myGroup.enter()
             client.searchForVehicles(page: index) { vehicles, error in
-            self.vehiclesArray.append(contentsOf: vehicles)
-            // Connect data:
-            self.picker.delegate = self
-            self.picker.dataSource = self
-            myGroup.leave()
+                if let error = error {
+                    self.show(error: error, for: .vehicle, url: nil)
+                }
+                else {
+                    self.vehiclesArray.append(contentsOf: vehicles)
+                    // Connect data:
+                    self.picker.delegate = self
+                    self.picker.dataSource = self
+                    myGroup.leave()
+                }
             }
         }
         
@@ -362,10 +386,29 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func lookupVehicle(by url: String){
         client.lookupVehicle(withUrl: url) { vehicle, error in
-            if let vehicle = vehicle {
-            self.setComponentsUI(for: vehicle)
+            if let error = error {
+                self.show(error: error, for: .vehicle, url: nil)
+            }
+            else {
+                if let vehicle = vehicle {
+                    self.setComponentsUI(for: vehicle)
+                }
             }
         }
+    }
+    
+    func lookupPlanet(by url: String){
+        client.lookupPlanet(withUrl: url) { planet, error in
+            if let error = error {
+                self.show(error: error, for: .planet, url: nil)
+            }
+            else {
+                if let planet = planet {
+                    self.contentLabel[1].text = planet.name
+                }
+            }
+        }
+
     }
     
     func setComponentsUI(for character: People){
@@ -380,11 +423,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         contentLabel[0].text = character.birthYear
         
-        client.lookupPlanet(withUrl: character.homeworldUrl) { planet, error in
-            if let planet = planet {
-            self.contentLabel[1].text = planet.name
+      /*  client.lookupPlanet(withUrl: character.homeworldUrl) { planet, error in
+            if let error = error {
+             self.show(error: error, for: .planet)
+            }
+            else {
+                if let planet = planet {
+                    self.contentLabel[1].text = planet.name
+                }
             }
         }
+         */
+        
+        let url = character.homeworldUrl
+        lookupPlanet(by: url)
         
         heightValueAux = character.height
         
@@ -404,6 +456,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         setLabelComponents()
         
+        englishLabel.text = "English"
+        englishValueLabel.setTitle("Metric", for: .normal)
+        
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
 
@@ -419,7 +474,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         contentLabel[1].numberOfLines = 1;
         contentLabel[1].adjustsFontSizeToFitWidth = true
         
-        contentLabel[2].text = vehicle.length
+        heightValueAux = vehicle.length
+        
+        contentLabel[2].text = heightValueAux
+        
         contentLabel[3].text = vehicle.vehicleClass
         contentLabel[4].text = vehicle.crew
         
@@ -433,6 +491,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         activityIndicator.stopActivityIndicator(activityIndicator: activityIndicator.activityIndicator)
 
         setLabelComponents()
+        
+        englishLabel.text = "English"
+        englishValueLabel.setTitle("Metric", for: .normal)
         
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
@@ -530,6 +591,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBAction func unitsButtonPressed(_ sender: Any){
         
+        print("unitsButtonPressed")
         // 1 m = 100cm = 39,4 in
     
         let labelValue = englishLabel.text
@@ -540,12 +602,15 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             englishValueLabel.setTitle("Units", for: .normal)
             if  heightValueAux != "unknown" {
                 if let doubleHeightValue = Double(heightValueAux) {
+                    print("doubleHeightValue \(doubleHeightValue)")
                 let value = doubleHeightValue * 0.394
+                    print("value \(value)")
                 let stringHeight = String(value.rounded())
+                    print("stringHeight \(stringHeight)")
                 heightValueAux = stringHeight
                     heightValueLabel.text = customize(height: stringHeight, for: UnitType.BritishUnits)
             }
-            }
+        }
         }
         // To meters
         else {
@@ -553,8 +618,11 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             englishValueLabel.setTitle("Metric", for: .normal)
             if heightValueAux != "unknown" {
                if let doubleHeightValue = Double(heightValueAux) {
+                print("doubleHeightValue \(doubleHeightValue)")
                 let value = doubleHeightValue * 2.54
+                print("value \(value)")
                 let stringHeight = String(value.rounded())
+                print("stringHeight \(stringHeight)")
                 heightValueAux = stringHeight
                 heightValueLabel.text = customize(height: stringHeight, for: UnitType.englishMetric)
             }
@@ -566,6 +634,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func customize(height value: String, for type: UnitType) -> String{
         print("size del string \(value.characters.count) \(value)")
         switch value.characters.count {
+            
         case 2:
             if type == .englishMetric {
             return "0.\(value)m"
@@ -576,10 +645,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         case 3: let toIndex = value.index(value.startIndex, offsetBy: 1)
                 let fromIndex = value.index(value.startIndex, offsetBy: 1)
         if type == .englishMetric {
-            return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))m"
+            if value.contains("."){
+                let fromIndex = value.index(value.startIndex, offsetBy: 2)
+                print("\(value.substring(to: toIndex))")
+                print("\(value.substring(from: fromIndex))")
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            else  {
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))m"
+            }
         }
         else {
-            return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            if value.contains("."){
+                let fromIndex = value.index(value.startIndex, offsetBy: 2)
+                print("\(value.substring(to: toIndex))")
+                print("\(value.substring(from: fromIndex))")
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            else {
+                return "\(value.substring(to: toIndex)).\(value.substring(from: fromIndex))in"
+            }
+            
             }
             
         case 4: let index = value.index(value.startIndex, offsetBy: 2)
@@ -607,8 +693,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-   
-    
     //  Given an array of buttons, this buttons are added to the stack view menu.
     func addSubViewToStackView(_ array: [UIButton]){
         for button in array {
@@ -624,8 +708,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
 
-    
-    
      //1 Credit = 0,62 USD
     
     func usdButtonClicked(sender: UIButton){
@@ -633,12 +715,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         usdButton.setTitleColor(.white, for: .normal)
         creditsButton.setTitleColor(greyColor, for: .normal)
-       /* 1 - 0.62
-        24 - X
-        
-        x = 24.0.62
- 
-         */
+       
         if costInCredits != "unknown"{
             if let cost = Double(costInCredits){
                 let costInCreditsValue = cost * 0.62
@@ -664,8 +741,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         creditsButton.setTitle("Credits", for: .normal)
         creditsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         creditsButton.addTarget(self, action: #selector(creditsButtonClicked(sender:)), for:.touchUpInside)
-        
-        
         
         buttonsArray.append(usdButton)
         buttonsArray.append(creditsButton)
@@ -710,6 +785,55 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func visualizeMoreButton() {
         showMoreButton.isHidden = false
         showMoreButton.isUserInteractionEnabled = true
+    }
+    
+    // Create an UIAlertController
+    func createAlert(with message: String, for typeOfItem: ElementType, url: String?){
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (action) in
+            //execute some code when this option is selected
+            switch typeOfItem {
+            case .character: self.searchForPeople()
+            case .vehicle: self.searchForVehicles()
+            case .starship: self.searchForStarships()
+            case .planet:
+                        if let url = url {
+                            self.lookupPlanet(by: url)
+                        }
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func show(error: APIError, for typeOfElement: ElementType, url: String?){
+        if case .invalidData = error {
+            self.createAlert(with: "Invalid data", for: typeOfElement, url: url)
+            UIApplication.shared.endIgnoringInteractionEvents()
+        }
+        else {
+            if case .jsonParsingFailure(message: "JSON data does not contain reuslts") = error {
+                self.createAlert(with: "JSON Parsing Failure", for: typeOfElement, url: url)
+                UIApplication.shared.endIgnoringInteractionEvents()
+            }
+            else {
+                if case .jsonConversionFailure = error {
+                    self.createAlert(with: "JSON Conversion Failure", for: typeOfElement, url: url)
+                    UIApplication.shared.endIgnoringInteractionEvents()
+                }
+                else {
+                    if case .requestFailed = error {
+                        self.createAlert(with: "Request Failed", for: typeOfElement, url: url)
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                    }
+                    else {
+                        if case .responseUnsuccessful = error {
+                            self.createAlert(with: "Unsuccessful Response", for: typeOfElement, url: url)
+                            UIApplication.shared.endIgnoringInteractionEvents()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
