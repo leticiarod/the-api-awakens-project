@@ -463,7 +463,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         costTextField.text = costInCredits
         costTextField.adjustsFontSizeToFitWidth = true
         
-        contentLabel[1].text = starship.length
+        heightValueAux = starship.length
+        
+        contentLabel[1].text = heightValueAux
+        
         contentLabel[2].text = starship.starshipClass
         contentLabel[3].text = starship.crew
         
