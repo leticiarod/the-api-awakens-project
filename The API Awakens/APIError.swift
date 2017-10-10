@@ -14,6 +14,7 @@ enum APIError: Error {
     case responseUnsuccessful
     case invalidData
     case jsonParsingFailure(message: String)
+    case negativeExchangeRate
 }
 
 

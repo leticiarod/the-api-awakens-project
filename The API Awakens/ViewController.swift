@@ -18,6 +18,7 @@ enum ElementType {
     case vehicle
     case starship
     case planet
+    case other
 }
 
 class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
@@ -64,6 +65,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     // Used to store the cost in credits value of an entity globally.
     var costInCredits = ""
     
+    // Used to know which is the current exchange
+    var currentExchange = ""
+    
     let usdButton = UIButton()
     let creditsButton = UIButton()
     
@@ -90,6 +94,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         // Creates the exchange buttons.
         createExchangeButtons()
+        
+        // Add target to costTextField in order to Enable check when a UITextField changes
+        costTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
         // Set title by option chosen by the user in the home menu
         switch entityTypeTapped {
@@ -398,6 +405,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Sets the corresponding text to the labels according to the vehicles info.
         setLabelComponents()
         
+        currentExchange = "Credits"
+        
         englishLabel.text = "English"
         englishValueLabel.setTitle("Metric", for: .normal)
         
@@ -529,18 +538,54 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         usdButton.setTitleColor(.white, for: .normal)
         creditsButton.setTitleColor(greyColor, for: .normal)
         
-        if costInCredits != "unknown"{
-            if let cost = Double(costInCredits){
-                let costInCreditsValue = cost * 0.62
-                costTextField.text = String(costInCreditsValue.rounded())
+        if let cost = costTextField.text{
+            costInCredits = cost
+        }
+        
+        if costInCredits != "0" && !costInCredits.contains("-") {
+            if currentExchange == "USD" {
+                costTextField.text = costInCredits
             }
+            else {
+                currentExchange = "USD"
+                if let cost = Double(costInCredits){
+                    let costInCreditsValue = cost * 0.62
+                    costTextField.text = String(costInCreditsValue.rounded())
+                }
+            }
+        }
+        else {
+            show(error: .negativeExchangeRate, for: .other, url: nil)
         }
     }
     
     func creditsButtonClicked(sender: UIButton){
         usdButton.setTitleColor(greyColor, for: .normal)
         creditsButton.setTitleColor(.white, for: .normal)
-        costTextField.text = costInCredits
+        
+        if let cost = costTextField.text{
+        costInCredits = cost
+        }
+        
+        if costInCredits != "0" && !costInCredits.contains("-") {
+            if currentExchange == "Credits" {
+                costTextField.text = costInCredits
+            }
+            else {
+                currentExchange = "Credits"
+                if let cost = Double(costInCredits){
+                    let costInUSDValue = cost / 0.62
+                    costTextField.text = String(costInUSDValue.rounded())
+                }
+            }
+        }
+        else {
+            show(error: .negativeExchangeRate, for: .other, url: nil)
+        }
+        
+    }
+    
+    func textFieldDidChange(_ textField: UITextField) {
         
     }
     
@@ -698,7 +743,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 return "\(value.substring(to: toIndex)).\(value.substring(with: range))in"
             }
         default:
-            //
             fatalError()
         }
     }
@@ -728,6 +772,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 if let url = url {
                     self.lookupPlanet(by: url)
                 }
+            case .other: return
             }
         }))
         self.present(alert, animated: true, completion: nil)
@@ -758,6 +803,9 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         if case .responseUnsuccessful = error {
                             self.createAlert(with: "Unsuccessful Response", for: typeOfElement, url: url)
                             UIApplication.shared.endIgnoringInteractionEvents()
+                        }
+                        else {
+                            self.createAlert(with: "Entered number can't be negative neither 0", for: typeOfElement, url: url)
                         }
                     }
                 }
